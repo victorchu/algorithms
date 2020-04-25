@@ -23,6 +23,7 @@ Ref:
 import logging
 logger = logging.getLogger(__name__)
 
+
 def is_palindrome(s):
     """Check if the specified string is a palindrome"""
     retval = True
@@ -33,6 +34,7 @@ def is_palindrome(s):
             retval = False
             break
     return retval
+
 
 def find_palindromic_partitions(s):
     """Find and print all palidromes in a strings.
@@ -76,6 +78,7 @@ def test_is_palindrome():
         r = is_palindrome(s)
         logger.info("is_palindrom({}) = {}".format(s, r))
 
+
 def test_print_palindromic_partitions():
     """Test print_palindromic_partitions() """
 
@@ -99,11 +102,9 @@ def init_logging():
 def main():
     """Main function"""
     init_logging()
-    #test_is_palindrome()
+    # test_is_palindrome()
     test_print_palindromic_partitions()
 
 
 if __name__ == "__main__":
     main()
-
-

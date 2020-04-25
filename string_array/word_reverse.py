@@ -35,6 +35,7 @@ def reverse_v1(s):
     retval = ' '.join(a)
     return retval
 
+
 def reverse_v2(s):
     """Word reverse followed by a sentence reverse.
     Time is O(n).  Space is O(1).
@@ -62,7 +63,7 @@ def reverse_v2(s):
             elif j == n-1:
                 reverse(a, i, j)
                 i = j + 1
-    
+
     # Reverse sentence
     reverse(a, 0, len(a)-1)
 
@@ -83,7 +84,8 @@ def main():
     """Main function"""
     init_logging()
 
-    test_data = ["be to not or be To", "forever is Life", "Is That All is Love"]
+    test_data = ["be to not or be To",
+                 "forever is Life", "Is That All is Love"]
     for s in test_data:
         logger.info("# Reversing '{}':".format(s))
         logger.info("> '{}'".format(reverse_v1(s)))
@@ -92,5 +94,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

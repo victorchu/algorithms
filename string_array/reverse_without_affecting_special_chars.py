@@ -14,6 +14,7 @@
 import logging
 logger = logging.getLogger(__name__)
 
+
 def is_normal_char(c):
     """My implementation of str.isalpha() function."""
     return (c >= 'a' and c <= 'z') or (c >= 'A' and c <= 'Z')
@@ -28,7 +29,7 @@ def reverse_simple(s):
     :param s: The input string
     """
     # Helper spaces
-    normal_list = list()  
+    normal_list = list()
     output_list = list()
 
     # First iteration: push normal characters to a list
@@ -136,5 +137,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

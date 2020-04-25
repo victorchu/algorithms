@@ -17,9 +17,11 @@ Ref:
 import logging
 logger = logging.getLogger(__name__)
 
+
 def _rotate_k(a, k):
     """Helper function."""
     return a[-k:] + a[0:-k]
+
 
 def rotate_v1(a, k):
     """Rotate one at a time using an extra array.
@@ -29,11 +31,13 @@ def rotate_v1(a, k):
         a = _rotate_k(a, 1)
     return a
 
+
 def rotate_v2(a, k):
     """One single rotate with an extra array.
     Time is O(n).  Space is O(n).
     """
     return _rotate_k(a, k % len(a))
+
 
 def rotate_v3(a, k, clone=True):
     """The bubble method.
@@ -44,12 +48,13 @@ def rotate_v3(a, k, clone=True):
         for j in reversed(range(1, len(a))):
             a[j] = a[j-1]
         a[0] = tmp
-    
+
     if clone:
         a = a.copy()
     for i in range(k % len(a)):
         _bubble(a)
     return a
+
 
 def rotate_v4(a, k, clone=True):
     """The double reverse method.
@@ -96,5 +101,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
