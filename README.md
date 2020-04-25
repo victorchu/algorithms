@@ -1,3 +1,3 @@
 # algorithms
-Example of Top Algorithms in Python3.
+Some top algorithms written in Python3.
 
