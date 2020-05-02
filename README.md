@@ -1,3 +1,5 @@
 # algorithms
-Some top algorithms written in Python3.
+
+Top algorithms implemented in Python3.
+Some are implemented in Java as well.
 
