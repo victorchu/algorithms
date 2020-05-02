@@ -31,7 +31,6 @@ class MedianOfTwoSortedArrays
     Method 1 - merge two arrays.
     */
     public double method1(int[] a1, int[] a2) {
-        System.out.println("# Method 1:");
         int n = a1.length;
         double median = 0;
 
@@ -55,14 +54,11 @@ class MedianOfTwoSortedArrays
                 x = a2[j];
                 j += 1;
             }
-            System.out.format("[DEBUG] i = %d, j = %d, k = %d, x = %d\n", i, j, k, x);
             if (k >= n - 1) {
-                System.out.println("[DEBUG] Appending median " + x);
                 median += x;
             }
         }
         median /= 2.0;
-        System.out.println("=> Median = " + median);
         return median;
     }
 
@@ -84,36 +80,28 @@ class MedianOfTwoSortedArrays
     Complexity is O(log(n)).
     */
     public double method2(int[] a1, int[] a2) {
-        double median = 0;
-
-        System.out.println("# Method 2:");
         int n = a1.length;
-        median = method2_helper(a1, 0, n, a2, 0, n);
-        System.out.println("=> Median = " + median);
-        return median;
+        return method2_helper(a1, 0, n, a2, 0, n);
     }
 
 	public double method2_helper(int[] a1, int i0, int i1, int[] a2, int j0, int j1) {
-
         // Termination condition
 		int n = i1 - i0;
 		if (n == 1) {
-			System.out.format("[DEBUG] Terminating with [%d], [%d]\n", a1[i0], a2[j0]);
-			double m = (a1[i0] + a2[j0]) / 2.0;
-			return m;
+			return (a1[i0] + a2[j0]) / 2.0;
 		}
         // Get the medians
         double m1 = getMedian(a1, i0, i1);
         double m2 = getMedian(a2, j0, j1);
-        System.out.format("[DEBUG] comparing %s (%.1f) with %s (%.1f)\n",
-            Arrays.toString(Arrays.copyOfRange(a1, i0, i1)), m1,
-            Arrays.toString(Arrays.copyOfRange(a2, j0, j1)), m2);
+//        System.out.format("[DEBUG] comparing %s (%.1f) with %s (%.1f)\n",
+//            Arrays.toString(Arrays.copyOfRange(a1, i0, i1)), m1,
+//            Arrays.toString(Arrays.copyOfRange(a2, j0, j1)), m2);
 
         if (m1 == m2) {
             return m1;
         }
         else {
-            int k = (int)(n / 2);
+            int k = n / 2;
             if (n % 2 != 0) {
                 k += 1;
             }
@@ -132,14 +120,14 @@ class MedianOfTwoSortedArrays
 	   Note: i1 - i0 = the length of the array.
 	*/
 	public double getMedian(int[] a, int i0, int i1) {
-		double retval;
+		double retval = 0;
 		int n = (i1 - i0);
 		if (n % 2 == 0) {
-			int k = i0 + (int)(n / 2) - 1;
+			int k = i0 + (n / 2) - 1;
 			retval = (a[k] + a[k+1]) / 2.0;
 		}
 		else {
-			int k = i0 + (int)(n / 2);
+			int k = i0 + (n / 2);
 			retval = a[k];
 		}
 		return retval;
@@ -169,8 +157,8 @@ class MedianOfTwoSortedArrays
             int[] a1 = a1s[i];
             int[] a2 = a2s[i];
             System.out.format("\n### Testing %s and %s\n", Arrays.toString(a1), Arrays.toString(a2));
-            m.method1(a1, a2);
-            m.method2(a1, a2);
+            System.out.format("- Method 1 => %f\n", m.method1(a1, a2));
+            System.out.format("- Method 2 => %f\n", m.method2(a1, a2));
         }
     }
 
