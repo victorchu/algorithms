@@ -3,14 +3,15 @@
 Top algorithms implemented in Python3.
 Some are implemented in Java as well.
 
-## Topics:
-
-- string/array
+## Cover Topics
 - matrix
+- sorting_and_search
+- string_array
+
+## Future Topics:
 - linked list
 - tree, heap and trie 
 - graph
-- sorting
 - dynamic programming
 - bit manipulation
 - combinations and permutations
