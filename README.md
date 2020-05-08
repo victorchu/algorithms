@@ -1,15 +1,14 @@
 # Algorithms
 
-Top algorithms implemented in Python3.
-Some are implemented in Java as well.
+Some popular algorithms implemented in Python3 and/or Java.
 
-## Cover Topics
-- matrix
-- sorting_and_search
+## Covered Topics
 - string_array
+- linked_list
+- sorting_and_search
+- matrix
 
-## Future Topics:
-- linked list
+## Other Candidate
 - tree, heap and trie 
 - graph
 - dynamic programming
@@ -17,4 +16,8 @@ Some are implemented in Java as well.
 - combinations and permutations
 - math
 - hashmap
+
+## Reference
+- https://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/
+- https://leetcode.com/problemset/top-interview-questions/
 
