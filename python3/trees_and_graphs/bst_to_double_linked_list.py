@@ -96,8 +96,8 @@ class Solution:
             if node.right:
                 process_node(head, node.right)
 
-        # The head node. 
-        # - head.right points to the first node.  
+        # The head node.
+        # - head.right points to the first node.
         # - head.left points to the tail node.
         head = Node(None)
 
