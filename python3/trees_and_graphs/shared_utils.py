@@ -13,44 +13,70 @@ class TreeNode:
 
 
 def make_tree(vals: List) -> TreeNode:
-    """Create a binary tree from a list of values."""
-    def add_children(node, i, vals, n):
-        i_left = 2 * i + 1
-        i_right = 2 * i + 2
+    """Create a binary tree from a list of values.
 
-        if (i_left < n) and (vals[i_left] is not None):
-            node.left = TreeNode(vals[i_left])
-            add_children(node.left, i_left, vals, n)
-        if (i_right < n) and (vals[i_right] is not None):
-            node.right = TreeNode(vals[i_right])
-            add_children(node.right, i_right, vals, n)
+    Examples:
 
-    if vals:
-        root = TreeNode(vals[0])
-        add_children(root, 0, vals, len(vals))
-    else:
-        root = None
+     - vals = [1, 2, 3, 4, 5]
+
+                 [1]
+                /   \
+             [2]     [3]
+             / \
+           [4] [5]
+
+    - vals = [3, None, 2, 1, 4]
+
+                 [3]
+                /   \
+           [None]    [2]
+                    /   \
+                  [1]   [4]
+
+    """
+    if not vals:
+        return None
+
+    root = TreeNode(vals[0])
+    queue = [root]
+    n = len(vals)
+    k = 1
+    while queue and k < n:
+        node = queue.pop(0)
+        if k and vals[k] is not None:
+            node.left = TreeNode(vals[k])
+            queue.append(node.left)
+        k += 1
+        if k and vals[k] is not None:
+            node.right = TreeNode(vals[k])
+            queue.append(node.right)
+        k += 1
     return root
 
 
 def tree_to_list(root: TreeNode) -> List:
     """Convert a tree back to a list of values.
-       Missing nodes will be filled with None.
-       This function is used to check the tree node.
+       This is the reverse of the make_tree function.
     """
-    queue = [[0, root]]  # (index, node)
-    vals = list()
+    if not root:
+        return list()
 
+    queue = [root] 
+    vals = list()
     while queue:
-        i, node = queue.pop(0)
-        # print("[DEBUG] checking i={}, node val={}, left={}, right={}".format(i, node.val, node.left, node.right))
-        while len(vals) < i:
-            vals.append(None)   # pad missing nodes
+        node = queue.pop(0)
+        if not node:
+            vals.append(None)
+            continue
         vals.append(node.val)
-        if node.left:
-            queue.append([2 * i + 1, node.left])
-        if node.right:
-            queue.append([2 * i + 2, node.right])
+
+        if node.left or node.right:
+            queue.append(node.left)
+            queue.append(node.right)
+
+    # Remove the None at the tail
+    if vals[-1] is None:
+        vals.pop()
 
     return vals
 
