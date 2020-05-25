@@ -20,6 +20,10 @@ EXAMPLE:
 TECHNIQUE:
   - stack
 
+REFERENCE:
+  - https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
+  - https://www.geeksforgeeks.org/flatten-a-binary-tree-into-linked-list/
+
 """
 
 from typing import List
