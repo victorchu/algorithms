@@ -1,6 +1,8 @@
 # Algorithms
 
-Some algorithms implemented in Python3.
+A collection of algorithm problems found online.
+
+Most algorithms are implemented in Python3.
 Few are implemented in Java as well.
 
 ## Reference
