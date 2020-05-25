@@ -68,9 +68,9 @@ class Solution:
         # Step 1. Build the edges (dependency)
         for w1, w2 in zip(words, words[1:]):
             for c1, c2 in zip(w1, w2):
-                if (c1 != c2):
+                if c1 != c2:
                     n1 = nodes[c1]
-                    if (c2 not in n1.edges):
+                    if c2 not in n1.edges:
                         n1.edges.add(c2)
                         nodes[c2].in_degree += 1
                     break
