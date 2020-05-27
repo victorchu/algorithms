@@ -8,8 +8,8 @@ Examples:
   Explanation: "abc".
 
 Ref:
+- https://leetcode.com/problems/longest-substring-without-repeating-characters/ (Medium)
 - https://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/
-- https://leetcode.com/problems/longest-substring-without-repeating-characters/
 
 """
 
@@ -79,7 +79,7 @@ def main():
     """Main function"""
     test_data = ["abcabcbb",
                  "bbbbb",
-                 "pwwkew" ]
+                 "pwwkew"]
     obj = Solution()
     for s in test_data:
         print("# Checking '{}':".format(s))

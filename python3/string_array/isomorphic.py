@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """
-Two strings str1 and str2 are called isomorphic if there is a one
-to one mapping possible for every character of str1 to every character
-of str2. And all occurrences of every character in ‘str1’ map to
-same character in ‘str2’
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while
+preserving the order of characters. No two characters may map to the same
+character but a character may map to itself.
+
 
 Examples:
   "egg" and "add" are isomorphic. ('e'->'a', 'g'->'d')
@@ -17,90 +21,79 @@ Key functions:
   - set(): store unique values
 
 Ref:
-  - https://www.programcreek.com/2014/05/leetcode-isomorphic-strings-java/
+  - https://leetcode.com/problems/isomorphic-strings/ (Easy)
   - https://www.geeksforgeeks.org/check-if-two-given-strings-are-isomorphic-to-each-other/
 
 """
 
 
-import logging
 import re
 
-logger = logging.getLogger(__name__)
 
+class Solution:
+    def is_isomorphic_v1(self, s1, s2):
+        """Use two dictionaries.
 
-def is_isomorphic_v1(s1, s2):
-    """Use two dictionaries.
+        Time is O(n). Storage is O(unique characters)
+        """
+        if len(s1) == len(s2):
+            m1 = dict()
+            m2 = dict()
+            retval = True
 
-    Time is O(n). Storage is O(unique characters)
-    """
-    if len(s1) == len(s2):
-        m1 = dict()
-        m2 = dict()
-        retval = True
-
-        for c1, c2 in zip(s1, s2):
-            if (c1 in m1) and m1[c1] != c2:
-                retval = False
-                break
-            elif (c2 in m2) and m2[c2] != c1:
-                retval = False
-                break
-            else:
-                m1[c1] = c2
-                m2[c2] = c1
-    else:
-        retval = False
-    return retval
-
-
-def is_isomorphic_v2(s1, s2):
-    """Use one dictionary.  Then, check if the values are unique.
-
-    Time is O(n). Storage is O(unique characters)
-    """
-    if len(s1) == len(s2):
-        m = dict()
-        retval = True
-
-        # Check one-way mapping.
-        # Yet, different chars from s1 can map to the same char in s2.
-        for c1, c2 in zip(s1, s2):
-            if (c1 in m) and m[c1] != c2:
-                retval = False
-                break
-            else:
-                m[c1] = c2
-
-        # Check the number of unique values
-        if len(m) != len(set(m.values())):
+            for c1, c2 in zip(s1, s2):
+                if (c1 in m1) and m1[c1] != c2:
+                    retval = False
+                    break
+                elif (c2 in m2) and m2[c2] != c1:
+                    retval = False
+                    break
+                else:
+                    m1[c1] = c2
+                    m2[c2] = c1
+        else:
             retval = False
-    else:
-        retval = False
-    return retval
+        return retval
 
 
-# ----------------
-#   Main
-# ----------------
-def init_logging():
-    fmt = "%(asctime)s %(levelname)s [%(funcName)s] %(message)s"
-    datefmt = '%Y-%m-%d %H:%M:%S'
-    logging.basicConfig(format=fmt, datefmt=datefmt, level=logging.DEBUG)
+    def is_isomorphic_v2(so, s1, s2):
+        """Use one dictionary.  Then, check if the values are unique.
+
+        Time is O(n). Storage is O(unique characters)
+        """
+        if len(s1) == len(s2):
+            m = dict()
+            retval = True
+
+            # Check one-way mapping.
+            # Yet, different chars from s1 can map to the same char in s2.
+            for c1, c2 in zip(s1, s2):
+                if (c1 in m) and m[c1] != c2:
+                    retval = False
+                    break
+                else:
+                    m[c1] = c2
+
+            # Check the number of unique values
+            if len(m) != len(set(m.values())):
+                retval = False
+        else:
+            retval = False
+        return retval
 
 
 def main():
-    """Main function"""
-    init_logging()
     test_data = [
         ['egg', 'add'],
         ['aab', 'xxy'],
         ['foo', 'bar']
     ]
+
+    sol = Solution()
     for s1, s2 in test_data:
-        logger.info("# Are '{}' and '{}' isomorphic?".format(s1, s2))
-        logger.info("(1) {}".format(is_isomorphic_v1(s1, s2)))
-        logger.info("(2) {}".format(is_isomorphic_v2(s1, s2)))
+        print("# Are '{}' and '{}' isomorphic?".format(s1, s2))
+        print("(1) {}".format(sol.is_isomorphic_v1(s1, s2)))
+        print("(2) {}".format(sol.is_isomorphic_v2(s1, s2)))
 
 
 if __name__ == "__main__":

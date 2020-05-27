@@ -84,7 +84,6 @@ class Solution:
             return 'IPv6'
         return 'Neither'
 
-        
 
 def main():
     test_data = [

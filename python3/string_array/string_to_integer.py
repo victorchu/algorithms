@@ -59,7 +59,7 @@ class Solution:
                 i += 1
             else:
                 break
-            
+
         # Handle sign
         if i < n:
             if s[i] == '+':
@@ -109,7 +109,6 @@ class Solution:
                 val = max_val
         return val
 
-
     def myAtoi_v3(self, s: str) -> int:
         """This one doesn't use regex.  Yet it sill use the Python int to convert."""
         INT_MAX = 2 ** 31 - 1
@@ -119,7 +118,7 @@ class Solution:
         sign = 1
         num_str = ""
         val = 0
-        
+
         for i, c in enumerate(s):
             if i == 0 and c in signs:
                 sign = 1 if c == '+' else -1
@@ -127,7 +126,7 @@ class Solution:
                 num_str += c
             else:
                 break
-        
+
         if num_str != "":
             val = int(num_str) * sign
             if val > INT_MAX:
@@ -150,7 +149,7 @@ def main():
         "words and 987",
         "-91283472332",
         ""
-        ]
+    ]
 
     sol = Solution()
     for s in test_data:
@@ -162,4 +161,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

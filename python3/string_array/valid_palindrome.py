@@ -65,6 +65,7 @@ class Solution:
 
         return retval
 
+
 def main():
     """Main function"""
     test_data = [

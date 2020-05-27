@@ -13,14 +13,14 @@ Example:
  Output: 16
 
 Key functions:
-  . np.mean(array)
-  . np.median(array)
-  . // : integer division
-  . %  : mod
+  - np.mean(array)
+  - np.median(array)
+  - // : integer division
+  - %  : mod
 
 Ref:
-  . https://www.geeksforgeeks.org/median-of-two-sorted-arrays/
-  . https://leetcode.com/problems/median-of-two-sorted-arrays/
+  - https://www.geeksforgeeks.org/median-of-two-sorted-arrays/ (Hard)
+  - https://leetcode.com/problems/median-of-two-sorted-arrays/
 """
 
 
@@ -29,7 +29,7 @@ from typing import List
 
 
 class Solution:
-    def method1(self, nums1: List[int], nums2:List[int]) -> float:
+    def method1(self, nums1: List[int], nums2: List[int]) -> float:
         """Merge two arrays.
 
         Complexity is O(n).
@@ -41,7 +41,7 @@ class Solution:
         total_len = n + m
 
         if total_len % 2 == 1:
-            k1 = k2 = total_len // 2 
+            k1 = k2 = total_len // 2
         else:
             k1 = total_len // 2 - 1
             k2 = k1 + 1

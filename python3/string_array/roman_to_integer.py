@@ -26,7 +26,8 @@ There are six instances where subtraction is used:
  - C can be placed before D (500) and M (1000) to make 400 and 900.
  - Given a roman numeral, convert it to an integer. Input is guaranteed to be within the range from 1 to 3999.
 
-Examples:
+EXAMPLES:
+
   "III" = 3
   "IV" = 4
   "IX" = 9
@@ -34,7 +35,7 @@ Examples:
   "MCMXCIV" = M:1000 + CM:900 + XC:90 + IV:4 = 1994
 
 Ref:
- -  https://leetcode.com/problems/roman-to-integer/
+ -  https://leetcode.com/problems/roman-to-integer/ (Easy)
 
 """
 
@@ -96,12 +97,12 @@ class Solution:
 def main():
     """Main function"""
     test_data = [
-       "III",
-       "IV",
-       "IX",
-       "LVIII",
-       "MCMXCIV"
-       ]
+        "III",
+        "IV",
+        "IX",
+        "LVIII",
+        "MCMXCIV"
+    ]
 
     sol = Solution()
     for s in test_data:
@@ -112,4 +113,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -12,8 +12,8 @@ Note:
   2. Minimize the total number of operations.
 
 Ref:
- - https://www.geeksforgeeks.org/move-zeroes-end-array/
- - https://leetcode.com/problems/move-zeroes/
+  - https://leetcode.com/problems/move-zeroes/ (Eazy)
+  - https://www.geeksforgeeks.org/move-zeroes-end-array/
 
 """
 from typing import List
@@ -47,7 +47,7 @@ class Solution:
 # ----------------
 def main():
     """Main function"""
-    test_data = [[0,1,0,3,12]]
+    test_data = [[0, 1, 0, 3, 12]]
     obj = Solution()
     for nums in test_data:
         print("# Input =", nums)
@@ -58,4 +58,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

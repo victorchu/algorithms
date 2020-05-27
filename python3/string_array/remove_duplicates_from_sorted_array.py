@@ -6,7 +6,7 @@ each element appear only once and return the new length.
 Do not allocate extra space for another array, you must do this by
 modifying the input array in-place with O(1) extra memory.
 
-Examples:
+EXAMPLES
   Input:  [1,1,2]
   Output: [1,2,...], 2 
 
@@ -14,10 +14,9 @@ Examples:
   Output: [0,1,2,3,4,...], 5 
 
 
-Technologies:
+REFERENCE:
+  - https://leetcode.com/problems/remove-duplicates-from-sorted-array/ (Easy)
 
-Ref:
-  - https://www.programcreek.com/2014/05/leetcode-reverse-words-in-a-string-ii-java/ 
 """
 
 from typing import List
@@ -38,10 +37,10 @@ class Solution:
 def main():
     """Main function"""
     test_data = [
-        [1,1,2],
-        [0,0,1,1,1,2,2,3,3,4],
+        [1, 1, 2],
+        [0, 0, 1, 1, 1, 2, 2, 3, 3, 4],
         [1],
-        [1,1,1,1,1],
+        [1, 1, 1, 1, 1],
         []
     ]
 

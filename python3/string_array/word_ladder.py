@@ -27,11 +27,6 @@ Ref:
 """
 
 
-import logging
-
-logger = logging.getLogger(__name__)
-
-
 def distance(w1, w2):
     """Return the distance of two words (of the same length)."""
     n = 0
@@ -39,6 +34,7 @@ def distance(w1, w2):
         if c1 != c2:
             n += 1
     return n
+
 
 def find(start, target, valid_words):
     """Perform a Bread-First Search (BFS) to guarantee the optimal solution.
@@ -62,7 +58,7 @@ def find(start, target, valid_words):
     visit_set = set([start])
     path = list()
 
-    logger.info("find({}, {}) in {}".format(start, target, valid_words))
+    print("find({}, {}) in {}".format(start, target, valid_words))
     while queue and not path:
         # Get the first element (history) from the queu
         h = queue.pop()
@@ -85,26 +81,14 @@ def find(start, target, valid_words):
                     path = new_hist
                     break
                 else:
-                    logger.debug(" + {}".format(new_hist))
+                    print(" + {}".format(new_hist))
                     queue.append(new_hist)
                     visit_set.add(w)
     n = len(path)
-    logger.info("===> {}, {}".format(n, path))
-
-
-# ----------------
-#   Main
-# ----------------
-def init_logging():
-    fmt = "%(asctime)s %(levelname)s [%(funcName)s] %(message)s"
-    datefmt = '%Y-%m-%d %H:%M:%S'
-    logging.basicConfig(format=fmt, datefmt=datefmt, level=logging.DEBUG)
+    print("===> {}, {}".format(n, path))
 
 
 def main():
-    """Main function"""
-    init_logging()
-
     d1 = ['POON', 'PLEE', 'SAME', 'POIE', 'PLEA', 'PLIE', 'POIN']
     find('TOON', 'PLEA', d1)
     find('TOON', 'PLIE', d1)
@@ -114,6 +98,7 @@ def main():
     d2 = ['hot', 'dot', 'dog', 'lot', 'log']
     find('hit', 'cog', d2)
     find('hit', 'dog', d2)
+
 
 if __name__ == "__main__":
     main()

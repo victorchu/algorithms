@@ -33,7 +33,6 @@ class Solution:
         retval = ' '.join(a)
         return retval
 
-
     def reverse_v2(self, s):
         """Word reverse followed by a sentence reverse.
         Time is O(n).  Space is O(1).
@@ -67,7 +66,6 @@ class Solution:
 
         # Convert a list back to a string
         return ''.join(a)
-
 
 
 def main():

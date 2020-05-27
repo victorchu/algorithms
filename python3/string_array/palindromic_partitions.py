@@ -1,22 +1,35 @@
 #!/usr/bin/env python3
 """
-Given a string, find all possible palindromic partitions of given string.
+Partition a string such that every substring of the partition is a palindrome.
 
-Examples:
-  Input: nitin
-  Output: n i t i n
-          n iti n
-          nitin
+"A palindrome is a word, number, phrase, or other sequence of characters which
+reads the same backward as forward, such as madam, racecar." -- Wikipedia
 
-  Input:  geeks
-  Output: g e e k s
-          g ee k s
+EXAMPLES:
 
-Key functions:
-  str[i:j] -- substring
+  Input: "aab"
+  Output: [
+    ['a', 'a', 'b'], ['aa', 'b']
+  ]
 
-Ref:
+  Input: "nitin"
+  Output: [
+      ['n', 'i', 't', 'i', 'n'],
+      ['n', 'iti', 'n'],
+      ['nitin']
+  ]
+
+  Input:  "geeks"
+  Output: [
+      ['g', 'e', 'e', 'k', 's'],
+      ['g', 'ee', 'k', 's']
+  ]
+
+
+REFERENCE:
+  - https://leetcode.com/problems/palindrome-partitioning/ (Medium)
   - https://www.geeksforgeeks.org/given-a-string-print-all-possible-palindromic-partition/
+  - https://en.wikipedia.org/wiki/Palindrome
 
 """
 
@@ -41,7 +54,6 @@ class Solution:
                     retval = False
                     break
             return retval
-
 
         def helper(palindrome_list, s):
             # Use a list of lists to store all results.
@@ -70,7 +82,12 @@ class Solution:
 # ----------------
 def main():
     """Main function"""
-    test_samples = ["nitin", "geeks", "aaracecar"]
+    test_samples = [
+        "aab",
+        "nitin",
+        "geeks",
+        "aaracecar",
+    ]
 
     sol = Solution()
     for s in test_samples:
