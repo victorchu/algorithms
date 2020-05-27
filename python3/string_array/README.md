@@ -27,6 +27,7 @@ Arrays and String
   - Given a string S, return the "reversed" string where all characters that are not
     a letter stay in the same place, and all letters reverse their positions.
 
+
 # Medium
 
 + eval_reverse_polish_notation.py
@@ -48,14 +49,22 @@ Arrays and String
     output[i] is equal to the product of all the elements of nums except nums[i].
 
 + string_to_integer.py
+  - Convert a string to an integer.
 
 + valid_ip.py
+  - Check whether a string is a valid IPv4 address or IPv6 address or neither.
 
 + valid_palindrome.py
+  - Given a string, determine if it is a palindrome, considering only
+    alphanumeric characters and ignoring cases.
 
 + word_ladder.py
+  - Given two words and a dictionary's word list, find the length of shortest
+    transformation sequence from one word to another, by altering one letter at a time.
 
 + word_reverse.py
+  - Given an input string, reverse the string word by word.
+
 
 ## Hard
 

@@ -10,7 +10,8 @@ Examples:
 Key functions:
 
 Ref:
-  - https://www.programcreek.com/2014/05/leetcode-reverse-words-in-a-string-ii-java/ 
+  - https://leetcode.com/problems/reverse-words-in-a-string/ (Medium)
+
 """
 
 

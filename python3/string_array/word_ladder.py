@@ -22,8 +22,9 @@ Key functions:
   - zip(word1, word2): character pair iterator.
 
 Ref:
+  - https://leetcode.com/problems/word-ladder (Medium)
   - https://www.geeksforgeeks.org/word-ladder-length-of-shortest-chain-to-reach-a-target-word/
-  - https://www.programcreek.com/2012/12/leetcode-word-ladder/
+
 """
 
 
