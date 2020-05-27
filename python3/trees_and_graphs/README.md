@@ -13,6 +13,9 @@ Trees and Graphs
   - Merge duplicates account records with name and a list of emails.
   - A good practice on dictionary and set.
 
++ bipartite_graph.py
+  - Given an undirected graph, return true if and only if it is bipartite.
+
 + bst_to_double_linked_list.py *
   -  Convert a Binary Search Tree (BST) to a sorted Circular Doubly-Linked List in place.
 
@@ -35,6 +38,9 @@ Trees and Graphs
 
 + validate_binary_search_tree.py
   - Determine if binary tree is a valid Binary Search Tree (BST).
+
++ vertical_traversal.py
+  - Get the binary tree values in the 'vertical' order, from left to right.
 
 
 ## Hard
