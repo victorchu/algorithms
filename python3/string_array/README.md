@@ -33,9 +33,6 @@ Arrays and String
 + eval_reverse_polish_notation.py
   - Evaluate the value of an arithemetric expression in Reverse Polish Notation.
 
-+ kth_largest.py
-  - Find the kth largest element in an unsorted array.
-
 + longest_substring_without_repeating_characters.py
   - Given a string, find the length of the longest substring without repeating characters.
 
