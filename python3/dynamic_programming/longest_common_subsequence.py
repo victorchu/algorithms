@@ -12,11 +12,9 @@ both strings.
 If there is no common subsequence, return 0.
 
 EXAMPLES:
-
 	Input: text1 = "abcde", text2 = "ace" 
 	Output: 3  
 	Explanation: LCS is "ace"
-
 
 	Input: text1 = "abc", text2 = "abc"
 	Output: 3
@@ -27,7 +25,6 @@ EXAMPLES:
 	Explanation: No LCS.
 
 Constraints:
-
     1 <= text1.length <= 1000
     1 <= text2.length <= 1000
     The input strings consist of lowercase English characters only.
@@ -132,7 +129,7 @@ class Solution:
            x  0  0  1  1  1  1  1
            t  0  0  1  1 (2) 2  2
            x  0  0  1  1  2  2  2
-           a  0  1  1  1  2 (3) 3
+           a  0 (1) 1  1  2 (3) 3
            y  0  1  1  1  2  3  3
            b  0  1  1  1  2  3 (4)
 
