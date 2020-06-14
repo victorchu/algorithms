@@ -24,9 +24,8 @@ def main():
 
     sol = Solution()
     for data, ans in test_data:
-        print("# Input = {}".format(data))
+        print("# Input = {} (ans={})".format(data, ans))
         print("  Output = {}".format(sol.method(data)))
-        print("  Expected = {}".format(ans))
 
 
 if __name__ == "__main__":
