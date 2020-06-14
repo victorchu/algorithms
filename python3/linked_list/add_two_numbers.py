@@ -13,8 +13,8 @@ Example:
   Explanation: 342 + 465 = 807.
 
 Ref:
+ - https://leetcode.com/problems/add-two-numbers/ (Medium)
  - https://www.geeksforgeeks.org/add-two-numbers-represented-by-linked-lists/
- - https://leetcode.com/problems/add-two-numbers/
 """
 
 

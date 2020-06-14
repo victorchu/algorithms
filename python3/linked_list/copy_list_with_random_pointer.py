@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """
-
 You are given a Double Link List with one pointer of each node pointing to the next node just
 like in a single link list. The second pointer however CAN point to any node in the list and
 not just the previous node. 
@@ -18,8 +17,8 @@ Example:
    Input 1 = (1,1) -> (2,1) -> None
 
 Ref:
+  - https://leetcode.com/problems/copy-list-with-random-pointer/ (Medium)
   - https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
-  - https://leetcode.com/problems/copy-list-with-random-pointer/
 
 """
 

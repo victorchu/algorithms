@@ -8,7 +8,8 @@ Example:
   Output: 1->1->2->3->4->5
 
 Ref:
-- https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/
+  - https://leetcode.com/problems/merge-two-sorted-lists/ (Easy)
+  - https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/
 
 """
 
