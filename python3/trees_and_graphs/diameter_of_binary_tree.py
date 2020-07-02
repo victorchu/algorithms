@@ -51,7 +51,7 @@ from shared_utils import TreeNode, make_tree, tree_to_list
 
 class Solution:
 
-    def diameterOfBinaryTree(self, root: TreeNode) -> List[str]:
+    def diameterOfBinaryTree_v1(self, root: TreeNode) -> List[str]:
         """Depth first search with bookkeeping on vertical and horizontal lengths."""
 
         def search_longest_path(node):
@@ -80,9 +80,6 @@ class Solution:
         return diameter
 
 
-# ---------------------------
-#   Main & Helper Functions
-# ---------------------------
 def main():
     """Main function"""
 
@@ -97,7 +94,7 @@ def main():
     for vals in test_data:
         root = make_tree(vals)
         print("\n# Input: {}".format(vals))
-        print("=> Output v1 = {}".format(sol.diameterOfBinaryTree(root)))
+        print("=> Output v1 = {}".format(sol.diameterOfBinaryTree_v1(root)))
 
 
 if __name__ == "__main__":

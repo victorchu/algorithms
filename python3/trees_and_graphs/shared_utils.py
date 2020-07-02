@@ -40,17 +40,21 @@ def make_tree(vals: List) -> TreeNode:
     root = TreeNode(vals[0])
     queue = [root]
     n = len(vals)
-    k = 1
-    while queue and k < n:
+    k = 1   # index to the next value in the array
+    while queue:
         node = queue.pop(0)
-        if k and vals[k] is not None:
-            node.left = TreeNode(vals[k])
-            queue.append(node.left)
-        k += 1
-        if k and vals[k] is not None:
-            node.right = TreeNode(vals[k])
-            queue.append(node.right)
-        k += 1
+        if k < n:
+            if vals[k] is not None:
+                node.left = TreeNode(vals[k])
+                queue.append(node.left)
+            k += 1
+        if k < n:
+            if vals[k] is not None:
+                node.right = TreeNode(vals[k])
+                queue.append(node.right)
+            k += 1
+        else:
+            break
     return root
 
 

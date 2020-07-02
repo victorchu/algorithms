@@ -35,7 +35,7 @@ EXAMPLE:
 
 TECHNIQUES:
   - Track the valid range for each node.
-  - Use float('inf') to get infinity.  Alternatively, use math.inf
+  - Use float('inf') and float('-inf') to get infinity.  Alternatively, use math.inf
 
 REFERNECE:
   - https://leetcode.com/problems/validate-binary-search-tree/ (Medium)
@@ -49,7 +49,37 @@ from shared_utils import TreeNode, make_tree, tree_to_list
 class Solution:
 
     def isValidBST_v1(self, root: TreeNode) -> bool:
-        """A depth-first approach."""
+        """A depth-first approach.  Return bounds from the helper function."""
+
+        def validate_node(node: TreeNode) -> bool:
+            val = node.val
+            lb, ub = val, val
+            status = True
+
+            if node.left:
+                lstatus, llb, lub = validate_node(node.left)
+                if lstatus and lub < val:
+                    lb = llb
+                else:
+                    return False, lb, ub
+
+            if node.right:
+                rstatus, rlb, rub = validate_node(node.right)
+                if rstatus and rlb > val:
+                    ub = rub
+                else:
+                    return False, lb, ub
+
+            return status, lb, ub
+
+        if not root:
+            return True
+
+        status, _, _ = validate_node(root)
+        return status
+
+    def isValidBST_v2(self, root: TreeNode) -> bool:
+        """A depth-first approach. Pass bounds to the helper function."""
 
         def validate_node(node: TreeNode, lb: float, ub: float) -> bool:
             val = node.val
@@ -68,7 +98,7 @@ class Solution:
 
         return validate_node(root, float('-inf'), float('inf'))
 
-    def isValidBST_v2(self, root: TreeNode) -> bool:
+    def isValidBST_v3(self, root: TreeNode) -> bool:
         """A breadth-first approach."""
 
         if not root:
@@ -110,6 +140,7 @@ def main():
         root = make_tree(vals)
         print("  Output v1 = {}".format(sol.isValidBST_v1(root)))
         print("  Output v2 = {}".format(sol.isValidBST_v2(root)))
+        print("  Output v3 = {}".format(sol.isValidBST_v3(root)))
 
 
 if __name__ == "__main__":

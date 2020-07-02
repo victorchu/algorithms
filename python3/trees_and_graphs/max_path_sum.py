@@ -57,15 +57,15 @@ class Solution:
 
                 if node.left:
                     left_vmax, left_hmax = helper(node.left)
-                    left_fmax_plus = left_vmax + node.val
                     hvals.append(left_hmax)
-                    hvals.append(left_fmax_plus)
-                    vvals.append(left_fmax_plus)
+                    left_vmax_plus = left_vmax + node.val
+                    hvals.append(left_vmax_plus)
+                    vvals.append(left_vmax_plus)
 
                 if node.right:
                     right_vmax, right_hmax = helper(node.right)
-                    right_vmax_plus = right_vmax + node.val
                     hvals.append(right_hmax)
+                    right_vmax_plus = right_vmax + node.val
                     hvals.append(right_vmax_plus)
                     vvals.append(right_vmax_plus)
 
@@ -94,11 +94,9 @@ def main():
 
     sol = Solution()
     for vals, ans in test_data:
-        print("# Input = {}".format(vals))
+        print("# Input = {} (ans={})".format(vals, ans))
         root = make_tree(vals)
-        print("  Output v1 = {}  (expected = {})".format(
-            sol.maxPathSum(root), ans))
-        #print("  Output v2 = {}".format(sol.isValidBST_v2(root)))
+        print("  Output v1 = {}".format(sol.maxPathSum(root)))
 
 
 if __name__ == "__main__":
