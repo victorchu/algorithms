@@ -12,12 +12,7 @@ REFERENCE:
 """
 
 from typing import List
-
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+from linked_list_utils import *
 
 
 class Solution:
@@ -39,36 +34,20 @@ class Solution:
 # ----------------
 #   Main
 # ----------------
-def lnode2str(p: ListNode) -> str:
-    """Convert a ListNode to a string."""
-    x = list()
-    while (p):
-        x.append(str(p.val))
-        p = p.next
-    return "({})".format(", ".join(x))
-
-
-def make_list(a: List) -> ListNode:
-    """Convert a Python list to a ListNode list."""
-    p = prehead = ListNode()
-    for x in a:
-        p.next = p = ListNode(x)
-    return prehead.next
-
-
 def main():
     """Main function"""
 
     test_data = [
-        [make_list([]), 0],
-        [make_list([1,2,6,3,4,5,6]), 6],
-        [make_list([1,2,6,3,4,5,6]), 1],
+        [[], 0],
+        [[1,2,6,3,4,5,6], 6],
+        [[1,2,6,3,4,5,6], 1],
     ]
 
     sol = Solution()
-    for head, val in test_data:
-        print("\n# Inputs: {}, val= {}".format(lnode2str(head), val))
+    for vals, val in test_data:
+        print("\n# Inputs: {}, val to remove = {}".format(vals, val))
 
+        head = make_linked_list(vals)
         out = sol.removeElements(head, val)
         print("  Output: {}".format(lnode2str(out)))
 

@@ -9,14 +9,15 @@ That is, write a program which will create a copy of this list.
 All of those random pointers need to point to the same corresponing
 nodes in the new list.
 
-Example:
+EXAMPLES:
    Each node has 'val', 'next', and 'random' attributes.
    Only the [val, random] will be shown in the example:
 
    Input 1 = (7,None) -> (13,0) -> (11,4) -> (10,2) -> (1,0) -> None
-   Input 1 = (1,1) -> (2,1) -> None
 
-Ref:
+   Input 2 = (1,1) -> (2,1) -> None
+
+REF:
   - https://leetcode.com/problems/copy-list-with-random-pointer/ (Medium)
   - https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
 
@@ -35,12 +36,18 @@ class Node:
 class Solution:
 
     def copyRandomList_v1(self, head: 'Node') -> 'Node':
-        """Use a dictionay to track random node index.
+        """Dictionary & Array.
 
-        Use O(n) extra space.
+        Helper data structures:
+        - Dictionary: {original_node: index}
+        - Array: [new_node]
+
+        Then, origina_node -> original_random_node -> index -> new_random_node
+
+        Use 3 x O(n) extra space.
         LeatCode: 36ms, 14.4 MB, beats 64%.
         """
-        tmp_list = list()
+        new_nodes = list()
         prehead = Node(0)
 
         # Convert random pointers to indexes.
@@ -53,9 +60,9 @@ class Solution:
             index_map[p] = i
             i += 1
 
-            # Clone node with value & keep a copy in tmp_list
+            # Clone node with value & keep a copy in new_nodes
             q.next = q = Node(p.val)
-            tmp_list.append(q)
+            new_nodes.append(q)
             p = p.next
 
         # Update the random pointer
@@ -66,18 +73,20 @@ class Solution:
             r = p.random
             if r is not None:
                 i = index_map[r]
-                q.random = tmp_list[i]
+                q.random = new_nodes[i]
             p = p.next
             q = q.next
 
         return prehead.next
 
     def copyRandomList_v2(self, head: 'Node') -> 'Node':
-        """Use a dictionay to connect original list with the new list.
+        """Dictionary.
+
+        Use a dictionay to connect original list with the new list.
         It doesn't need to know the index position of the random link.
         This may not be faster than v1.
 
-        Use O(n) extra space.
+        Use 2 x O(n) extra space.
         LeatCode: 32 ms, 14.4 MB, beats 86.78%.
         """
         prehead = Node(0)

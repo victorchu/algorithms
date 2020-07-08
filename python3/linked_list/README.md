@@ -10,6 +10,10 @@ Linked List
 + [remove_linked_list_elements.py](remove_linked_list_elements.py)
   - Remove all elements from a linked list of integers that have value val.
 
++ [reverse_linked_list.py](reverse_linked_list.py):
+  - Reverse a singly linked list.
+  - See Also: [reorder_list.py](reorder_list.py)
+
 ## Medium
 
 + [add_two_numbers.py](add_two_numbers.py)
@@ -25,5 +29,18 @@ Linked List
 + [reorder_list.py](reorder_list.py)
   - Given a singly linked list L0 -> L1 -> ... -> Ln
   - Reorder it to L0 -> Ln -> L1 -> Ln-1 -> ...
+  - See Also: [reverse_linked_list.py](reverse_linked_list.py)
+
+
+## Hard
++ [reverse_k_group.py](reverse_k_group.py)
+  - Given a linked list, reverse the nodes of a linked list k at a time.
+  - Study [reverse_linked_list.py](reverse_linked_list.py) first.
+
+
+## Utiliites
+
++ [linked_list_utils.py](linked_list_utils.py)
+  - Shared linked-list utilities.
 
 

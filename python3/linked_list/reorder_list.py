@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Given a singly linked list L: L0→L1→…→Ln-1→Ln,
-reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+Given a singly linked list L: L0 -> L1 -> ... -> Ln-1 -> Ln,
+reorder it to: L0 -> Ln -> L1 -> Ln-1 -> L2 -> Ln-2 -> ...
 
 You may not modify the values in the list's nodes, only nodes itself may be changed.
 
@@ -19,12 +19,7 @@ REFERENCE:
 """
 
 from typing import List
-
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+from linked_list_utils import *
 
 
 class Solution:
@@ -69,44 +64,24 @@ class Solution:
         p.next = None
 
 
-# ----------------
-#   Main
-# ----------------
-def lnode2str(p: ListNode) -> str:
-    """Convert a ListNode to a string."""
-    x = list()
-    while (p):
-        x.append(str(p.val))
-        p = p.next
-    return "({})".format(", ".join(x))
-
-
-def make_list(a: List) -> ListNode:
-    """Convert a Python list to a ListNode list."""
-    p = prehead = ListNode()
-    for x in a:
-        p.next = p = ListNode(x)
-    return prehead.next
-
-
 def main():
     """Main function"""
 
     test_data = [
-        make_list([]),
-        make_list([1]),
-        make_list([1,2]),
-        make_list([1,2,3,4]),
-        make_list([1,2,3,4,5]),
+        [],
+        [1],
+        [1, 2],
+        [1, 2, 3, 4],
+        [1, 2, 3, 4, 5],
     ]
 
     sol = Solution()
-    for head in test_data:
-        print("\n# Inputs: {}".format(lnode2str(head)))
+    for data in test_data:
+        print("\n# Inputs: {}".format(data))
 
-        # head will be modified.
+        head = make_linked_list(data)
         sol.reorderList(head)
-        print(" output = {}".format(lnode2str(head)))
+        print("  Output: {}".format(lnode2str(head)))
 
 
 if __name__ == "__main__":
