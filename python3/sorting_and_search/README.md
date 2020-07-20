@@ -4,7 +4,7 @@ Sorting and Searching
 ## Easy
 + [two_sum_ii.py](two_sum_ii.py)
   - Given a sorted array of integers, find two numbers that add up to a specific target number.
-  - See Also: [../string_array/two_sum.py](two_sum.py), [../string_array/three_sum.py](three_sum.py)
+  - See Also: [two_sum.py](../string_array/two_sum.py), [three_sum.py](../string_array/three_sum.py)
 
 
 ## Medium

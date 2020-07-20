@@ -47,7 +47,7 @@ Arrays and String
 
 + [two_sum.py](two_sum.py)
   - Given an array of integers, return indices of the two numbers such that they add up to a specific target.
-  - See Also: [three_sum.py](three_sum.py), [../sorting_and_search/two_sum_ii.py](two_sum_ii.py)
+  - See Also: [three_sum.py](three_sum.py), [two_sum_ii.py](../sorting_and_search/two_sum_ii.py)
 
 + [validate_parentheses.py](validate_parentheses.py)
   - Given a string containing just the characters '(', ')', '{', '}', '[' and ']',
