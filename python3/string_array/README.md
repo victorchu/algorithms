@@ -47,7 +47,7 @@ Arrays and String
 
 + [two_sum.py](two_sum.py)
   - Given an array of integers, return indices of the two numbers such that they add up to a specific target.
-  - See Also: [three_sum.py](three_sum.py)
+  - See Also: [three_sum.py](three_sum.py), [../sorting_and_search/two_sum_ii.py](two_sum_ii.py)
 
 + [validate_parentheses.py](validate_parentheses.py)
   - Given a string containing just the characters '(', ')', '{', '}', '[' and ']',
@@ -117,10 +117,6 @@ Arrays and String
 
 
 ## Hard
-
-+ [median_two_sorted_arrays.py](median_two_sorted_arrays.py)
-  - Find the median of the two sorted arrays.
-  - The overall run time complexity should be O(log (m+n)).
 
 + [minimum_window_substring.py](minimum_window_substring.py)
   - Given a string S and a string T, find the minimum window in S which will contain
