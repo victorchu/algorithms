@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+Design and implement a data structure for Least Recently Used (LRU) cache.
+It should support the following operations: get and put.
 
   get(key) - Get the value (will always be positive) of the key if the key exists in the cache,
       otherwise return -1.
@@ -46,6 +47,10 @@ REFERENCE:
 """
 
 
+# ------------------
+#  Helper Classes
+# ------------------
+
 class DNode:
     """Define a double-linked list node"""
 
@@ -64,49 +69,32 @@ class DList:
         self.tail = None
         self.size = 0
 
-    def dump(self, reverse=True):
+    def dump(self):
         vals = []
         p = self.head
         while p:
             vals.append(str(p))
             p = p.next
+        print("[DList] {} (size={})".format(" <-> ".join(vals), self.size))
 
-        if not vals:
-            vals.append('None')
-        print("[HEAD] {} (size={})".format(" <-> ".join(vals), self.size))
-
-        if reverse:
-            vals = []
-            p = self.tail
-            while p:
-                vals.append(str(p))
-                p = p.prev
-            if not vals:
-                vals.append('None')
-            print("[TAIL] {}".format(" <-> ".join(vals)))
-
-    def insert(self, val):
-        """Insert a node to the front."""
+    def append(self, val):
+        """Append a node to the end."""
         node = DNode(val)
-        # Link with the current head
-        if self.head:
-            node.next = self.head
-            self.head.prev = node
-        # Assign the node as the new head
-        self.head = node
-
-        # Handle tail
-        if not self.tail:
+        if self.tail:
+            self.tail.next = node
+            node.prev = self.tail
             self.tail = node
-
+        else:
+            self.head = node
+            self.tail = node
         self.size += 1
+        return node
 
-    def move_to_head(self, node):
+    def remove(self, node):
         """Move the specified node to head.
         Assumes that the specified node is part of the DList.
         """
-        # Special case: no action
-        if self.head == node or not self.head:
+        if not node:
             return
 
         # Remove the node from the current position
@@ -114,70 +102,84 @@ class DList:
             node.prev.next = node.next
         if node.next:
             node.next.prev = node.prev
-
-        # Adjust the tail
+        if self.head == node:
+            self.head = node.next
         if self.tail == node:
             self.tail = node.prev
-
-        # Insert this node to the front
-        self.head.prev = node
-        node.next = self.head
-        self.head = node
-        node.prev = None
-
-    def pop(self):
-        """Remove the tail node."""
-        if not self.tail:
-            return
-
-        # Handle tail
-        node = self.tail
-        if node.prev:
-            node.prev.next = None
-        self.tail = node.prev
-
-        # Handle head
-        if self.head == node:
-            self.head = None
-
         self.size -= 1
 
-    @staticmethod
-    def test():
-        """Unit test"""
-        dl = DList()
-        dl.dump()
-        dl.insert(1, 1)
-        dl.dump()
-        dl.insert(2, 2)
-        dl.dump()
-        dl.move_to_head(dl.tail)
-        dl.dump()
-        dl.pop()
-        dl.dump()
+    def pop(self, last=False):
+        """Remove the tail node or the head node."""
+        if last:
+            self.remove(self.tail)
+        else:
+            self.remove(self.head)
 
+
+class MyOrderedDict:
+    """My implementation of OrderedDict.
+    Use a DList to track the key orders.
+    """
+
+    def __init__(self):
+        self.dlist = DList()
+        self.cache = dict()     # {key: [val, node]}
+
+    def __len__(self):
+        return len(self.cache)
+
+    def __contains__(self, key):
+        return key in self.cache
+
+    def __getitem__(self, key):
+        x = self.cache[key]
+        return x[0]
+
+    def __setitem__(self, key, val):
+        """This function does not change the order."""
+        if key in self.cache:
+            x = self.cache[key]
+            x[1] = val
+        else:
+            self.cache[key] = [val, self.dlist.append(key)]
+
+    def __delitem__(self, key):
+        if key in self.cache:
+            val, node = self.cache[key]
+            self.dlist.remove(node)
+            del self.cache[key]
+
+    def popitem(self, last=True):
+        if last:
+            self.__delitem__(self.dlist.tail.val)
+        else:
+            self.__delitem__(self.dlist.head.val)
+
+
+# ------------------
+#  LRU Caches
+# ------------------
 
 class LRUCache_v1:
-    """Use a custom implementation of DList."""
+    """Use DList to track the key order."""
 
     def __init__(self, capacity: int):
-        self.dlist = DList()
-        self.map = dict()
+        self.dlist = DList()    # used to track key orders
+        self.cache = dict()
         self.capacity = capacity
 
     def get(self, key: int) -> int:
         """Get the value corresponding to the specified key.
-
-        Get the value (will always be positive) of the key if the key exists
-        in the cache, otherwise return -1.
+        Refresh the key order.
         """
-        if key in self.map:
-            node = self.map[key]
-            val = node.val[1]
-            self.dlist.move_to_head(node)
+        if key in self.cache:
+            val, node = self.cache[key]
+            self.dlist.remove(node)
+
+            node = self.dlist.append(key)
+            self.cache[key] = [val, node]
         else:
             val = -1
-
         return val
 
     def put(self, key: int, value: int) -> None:
@@ -190,27 +192,20 @@ class LRUCache_v1:
         Note that the same key put be put multiple times with different values.
         The later value shall replace the previous one.
         """
-        # Check if the key exist
-        if key in self.map:
-            node = self.map[key]
-            node.val[1] = value
-            self.dlist.move_to_head(node)
-
+        if key in self.cache:
+            _, node = self.cache[key]
+            self.dlist.remove(node)
+            self.cache[key] = [value, self.dlist.append(value)]
         else:
-            # Drop the least recently used
-            if len(self.map) >= self.capacity:
-                del self.map[self.dlist.tail.val[0]]
-                self.dlist.pop()
-
-            # Insert a new node.
-            # Note that we store (key, value) into the value part of the node.
-            # The key will be needed when we exceed the capacity.
-            self.dlist.insert([key, value])
-            self.map[key] = self.dlist.head
+            if len(self.cache) >= self.capacity:
+                oldest_key = self.dlist.head.val
+                del self.cache[oldest_key]
+                self.dlist.pop(last=False)
+            self.cache[key] = [value, self.dlist.append(key)]
 
 
 class LRUCache_v2:
-    """Use the OrderedDict module from collections."""
+    """Use OrderedDict from collections."""
 
     def __init__(self, capacity: int):
         from collections import OrderedDict
@@ -237,27 +232,73 @@ class LRUCache_v2:
             self.cache[key] = value
 
 
+class LRUCache_v3:
+    """Use MyOrderedDict."""
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = MyOrderedDict()
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        else:
+            val = self.cache[key]
+            del self.cache[key]
+            self.cache[key] = val
+            return val
+
+    def put(self, key: int, value: int) -> None:
+        if key not in self.cache:
+            if len(self.cache) >= self.capacity:
+                self.cache.popitem(last=False)  # FIFO order
+            self.cache[key] = value
+        else:
+            # Delete and then reinsert into the cache
+            del self.cache[key]
+            self.cache[key] = value
+
+
+def dlist_test():
+    print("# DList Test")
+    dl = DList()
+    dl.dump()
+    dl.append([1, 1])
+    dl.append([2, 2])
+    dl.append([3, 3])
+    dl.dump()
+    dl.pop(last=True)
+    dl.dump()
+    dl.pop(last=False)
+    dl.dump()
+    print()
+
+
 def lru_driver(cmds, args, ver='v1'):
     obj = None
     for cmd, arg in zip(cmds, args):
         #print("[DEBUG] processing cmd = {}, arg = {}".format(cmd, arg))
         if cmd == 'LRUCache':
-            print("LRUCache_{}({})".format(ver, *arg))
+            print("# LRUCache_{}({})".format(ver, *arg))
             if ver == 'v1':
                 obj = LRUCache_v1(*arg)
             elif ver == 'v2':
                 obj = LRUCache_v2(*arg)
+            elif ver == 'v3':
+                obj = LRUCache_v3(*arg)
+
         elif cmd == 'put':
             print(" - put({})".format(arg))
             obj.put(*arg)
+
         elif cmd == 'get':
             val = obj.get(*arg)
             print(" - get({}) = {}".format(arg, val))
 
+    print()
 
-def main():
-    # DList.test()
 
+def lru_test():
     test_data = [
         [["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"],
             [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]],
@@ -271,6 +312,12 @@ def main():
     for cmds, args in test_data:
         lru_driver(cmds, args, "v1")
         lru_driver(cmds, args, "v2")
+        lru_driver(cmds, args, "v3")
+
+
+def main():
+    dlist_test()
+    lru_test()
 
 
 if __name__ == "__main__":
