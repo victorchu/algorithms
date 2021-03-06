@@ -5,7 +5,7 @@ Trees and Graphs
 + [binary_tree_paths.py](binary_tree_paths.py)
   - Find all root-to-leaf paths in a binary tree.
 
-+ [diameter_of_binary_tree.py](diameter_of_binary_tree.py)
++ [Diameter of Binary](diameter_of_binary_tree.py)
   - Compute the diameter (or width) of a binary tree. 
 
 + [flood_fill.py](flood_fill.py):
@@ -34,11 +34,18 @@ Trees and Graphs
 + [clone_undirected_graph.py](clone_undirected_graph.py)
   - Deep copy a graph.
 
-+ [course_schedule.py](course_schedule.py)
++ [Course Schedule I](course_schedule.py) *
   - Given the total number of courses and a list of prerequisite pairs, is it
     possible for you to finish all courses?
-  - Topological sorting.
+  - This is a topological sorting problem.
   - See Also: [alien_dictionary.py](alien_dictionary.py)
+
++ [Course Schedule II](course_schedule.py) *
+  - Similar to [Course Schedule I](course_schedule.py), yet needs to return the courses.
+
++ [Decode String](decode_string.py)
+  - Decode k[s] as k * s, where k is a positive number and s may contain other encodings.
+  - Techniques: recurssion and stack.
 
 + [flatten_binary_tree_to_linked_list.py](flatten_binary_tree_to_linked_list.py)
   - Given a binary tree, flatten it to a linked list in-place.
@@ -65,12 +72,6 @@ Trees and Graphs
 + [vertical_traversal.py](vertical_traversal.py)
   - Get the binary tree values in the 'vertical' order, from left to right.
 
-+ [word_ladder.py](word_ladder.py)
-  - Given two words (beginWord and endWord), and a dictionary's word list, find the
-    length of shortest transformation sequence from beginWord to endWord, such that
-    only one letter can be changed at a time.
-  - See Also: [word_ladder2.py](word_ladder2.py)
-
 + [zipzag_level_traversal.py](zipzag_level_traversal.py)
   - Given a binary tree, return the zigzag level order traversal of its nodes' values. 
     (ie, from left to right, then right to left for the next level and alternate between).
@@ -93,11 +94,14 @@ Trees and Graphs
   - Find the shortest total distance to all buildings in a grid.
   - Use layer-by-layer bread-first search.
 
-+ [word_ladder2.py](word_ladder2.py):
-  - Given two words (beginWord and endWord) and a dictionary's word list, find all
-    shortest transformation sequence(s) from beginWord to endWord, such that
-    only one letter can be changed at a time.
-  - See Also: [word_ladder.py](word_ladder.py)
++ [Word Letter I](word_ladder.py)
+  - Given two words (beginWord and endWord), and a dictionary's word list, find the
+    length of shortest transformation sequence from beginWord to endWord, such that
+    only one letter can be changed at a time.  Return length of the ladder.
+  - See Also: [word_ladder2.py](word_ladder2.py)
+
++ [Word Letter II](word_ladder2.py):
+  - Similar to [Word Letter I](word_ladder.py), but return the words in the ladder.
 
 
 ## Utilities

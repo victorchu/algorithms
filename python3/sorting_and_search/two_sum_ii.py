@@ -47,6 +47,9 @@ class Solution:
     def twoSum_v2(self, numbers: List[int], target: int) -> List[int]:
         """Use a dictionary.  The array doesn't need to be sorted.
 
+        Note that the dictionary contains visited values only.
+        This method can handle duplicated values.
+
         Time complexity: O(N).  Storage O(N).
         """
         index_dict = dict()   # {num: index}
@@ -62,6 +65,7 @@ class Solution:
 def main():
     test_data = [
         [[2, 7, 11, 15], 9, [1, 2]],
+        [[2, 7, 7, 11, 15], 14, [2, 3]],
     ]
 
     sol = Solution()

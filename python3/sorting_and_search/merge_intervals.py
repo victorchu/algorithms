@@ -29,17 +29,23 @@ class Solution:
         our own sort method (like merge sort) and make some modifications.
         """
         ans = []
-        if intervals:
-            it = iter(sorted(intervals))
-            curr = next(it)
-            for x in it:
-                if x[0] <= curr[1]:
-                    if x[1] > curr[1]:
-                        curr[1] = x[1]
-                else:
-                    ans.append(curr)
-                    curr = x
-            ans.append(curr)
+        if not intervals:   # validate input
+            return ans
+
+        # Get the first element
+        it = iter(sorted(intervals))    # will sort on the first value!
+        curr = next(it) 
+
+        # Iterate through the rest
+        for x in it:
+            # Compare two consecutive intervals.
+            if x[0] <= curr[1]:   
+                if x[1] > curr[1]:
+                    curr[1] = x[1]
+            else:
+                ans.append(curr)
+                curr = x
+        ans.append(curr)
         return ans
 
     def merge_v2(self, intervals: List[List[int]]) -> List[List[int]]:
@@ -78,8 +84,9 @@ def main():
     sol = Solution()
     for intervals in test_data:
         print("# Input  : {}".format(intervals))
-        print("  Output v1: {}".format(sol.merge_v1(intervals)))
-        print("  Output v2: {}".format(sol.merge_v2(intervals)))
+        print("  - Output v1: {}".format(sol.merge_v1(intervals)))
+        print("  - Output v2: {}".format(sol.merge_v2(intervals)))
+        print()
 
 
 if __name__ == "__main__":

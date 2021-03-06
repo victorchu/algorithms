@@ -44,34 +44,44 @@ class Solution:
     def canFinish_v1(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         """DFS with two sets.
         This method primarily searches for loops.
+        - First, build a graph based on prequisites.
+        - Given any course number n, traverse the graph use DFS.
+        - Yet, use a working set to track all of the nodes are being process.
+        - If DFS hits any of node in the working set, it is a loop. 
         """
-        # pre-process pre-requisites
+        # Build a graph with a dictionary.  Each node has a list of edges.
         graph = defaultdict(list)
         for a, b in prerequisites:
             graph[a].append(b)
+
+        # Use two sets to track processed and working nodes.
         processed = set()
         working_set = set()
 
         def dfs(n):
+            """Use DFS to traverse the graph, starting from Node n."""
             if n in processed:
                 return True
             if n in working_set:
                 return False
 
+            # Add current node to the working set and continue to traverse.
+            # We shall not run into this node during the traversal.
             working_set.add(n)
             edges = graph[n]
             for m in edges:
                 if not dfs(m):
                     return False
 
+            # On finishing BFS, remove the current node from the working set.
+            # And mark it as processed.
             working_set.remove(n)
             processed.add(n)
             return True
 
-        # Visit every single node (class)
+        # Visit every single node (class number).
+        # If the traversal function returns False if it detects a loop.
         for n in range(numCourses):
-            if n in processed:
-                continue
             if not dfs(n):
                 return False
 
@@ -84,9 +94,10 @@ class Solution:
         - Start with those with in-degree 0.
         - Reduce the in-degree for connected node.
         - This is more of a BFS.
+        - Loops will not be reachable.
         """
 
-        # Build up the graph
+        # Build up the graph and update the in-degree.
         graph = [[] for _ in range(numCourses)]
         indegrees = [0] * numCourses
         for p, q in prerequisites:

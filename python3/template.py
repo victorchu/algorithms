@@ -2,9 +2,7 @@
 """
 
 
-EXAMPLES:
-
-REFERENCE:
+Reference:
   -
 
 """
@@ -24,8 +22,8 @@ def main():
 
     sol = Solution()
     for data in test_data:
-        print("# Input  : {}".format(data))
-        print("  Output : {}".format(sol.method(data)))
+        print("# Input: {}".format(data))
+        print("  - Output: {}".format(sol.method(data)))
 
 
 if __name__ == "__main__":

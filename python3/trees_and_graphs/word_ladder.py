@@ -26,7 +26,7 @@ EXAMPLES
   Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
 
 Ref:
-  - https://leetcode.com/problems/word-ladder (Medium)
+  - https://leetcode.com/problems/word-ladder (Hard)
   - https://www.geeksforgeeks.org/word-ladder-length-of-shortest-chain-to-reach-a-target-word/
 
 """
@@ -77,7 +77,11 @@ class Solution:
         return 0
 
     def ladderLength_v2(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        """Use forward and reverse indexes to speedup distance measures."""
+        """Use word patterns to speed up distance comparison.
+        E.g., 
+            h*t -> [hit, hat, hot, ...]
+            do* -> [dog, dot, ...]
+        """
 
         # Sanity check
         if endWord not in wordList:
@@ -110,7 +114,11 @@ class Solution:
         return 0
 
     def ladderLength_v3(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        """Two-side BFS -- search from both begin and end."""
+        """Two-side BFS -- search from both begin and end.
+
+        Use two queues -- queue0 and queue1. 
+        Then either use a flag to indicate the direction or swap these two queues.
+        """
 
         # Sanity check
         if endWord not in wordList:
@@ -125,7 +133,6 @@ class Solution:
         # Begin to search
         queue0 = [beginWord]
         queue1 = [endWord]
-        reverse = False
         visited = set([beginWord, endWord])
         length = 1
 
@@ -147,7 +154,6 @@ class Solution:
 
             # Swap queues
             queue0, queue1 = queue1, queue0
-            reverse = True
 
         return 0
 
