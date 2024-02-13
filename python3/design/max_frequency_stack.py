@@ -45,27 +45,44 @@ from collections import Counter
 
 
 class FreqStack:
-    """Use a stack of stacks -- one substack for each frequency."""
+    """A frequency stack. On pop, the element with highest frequency will be poped.
 
+    It uses a counter to track the frequency of each element.
+    It has multiple sub-stacks; each is used to track the element with a specific frequency.
+    
+    Example:
+      Pushing 5, 7, 5, 7, 4, 5 into the structure, the elements are stored in the following way
+
+      freq_stacks =
+        [[5, 7, 4], # frequency 1, storing the first apperance of each element
+         [5, 7],    # frequency 2, storing elements with frequency 2
+         [5]]       # frequency 3
+         
+      Note that 5 was pushed 3 times; then, it is stored 3 times in the structure,
+      each in a different sub-stack.
+    """
     def __init__(self):
-        self.counter = Counter()
-        self.stacks = []
+        self.freq_stacks = []    # [stack1, stack2, stack3, ..., stackN]
+        self.counter = defaultdict(int)
 
     def push(self, x: int) -> None:
-        freq = self.counter[x] + 1
-        if freq <= len(self.stacks):
-            stack = self.stacks[freq-1]
-            stack.append(x)
-        else:
-            self.stacks.append([x])
         self.counter[x] += 1
-
+        freq = self.counter[x]
+        if freq <= len(self.freq_stacks):
+            sub_stack = self.freq_stacks[freq - 1]
+            sub_stack.append(x)
+        else:
+            sub_stack = [x]
+            self.freq_stacks.append(sub_stack)
+    
     def pop(self) -> int:
-        stack = self.stacks[-1]
-        x = stack.pop()
-        if not stack:
-            self.stacks.pop()
+        if not self.freq_stacks:
+            return None
+        sub_stack = self.freq_stacks[-1]
+        x = sub_stack.pop()
         self.counter[x] -= 1
+        if not sub_stack:
+            self.freq_stacks.pop()
         return x
 
 

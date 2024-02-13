@@ -30,18 +30,18 @@ from typing import List
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
+        """Track current min price and the max profit."""
         if not prices:
             return 0
-
-        max_profit = 0
         min_price = max(prices)
+        max_profit = 0
         for p in prices:
+            # Adjust the min price. Yet, we cannot sell on the same day.
             if p < min_price:
-                min_price = p
-                continue
-            profit = p - min_price
-            if profit > max_profit:
-                max_profit = profit
+                min_price = p            
+            # Calculate the profit
+            else:
+                max_profit = max(max_profit, p - min_price)
         return max_profit
 
 
@@ -52,10 +52,10 @@ def main():
         [[], 0],
     ]
 
-    sol = Solution()
+    ob1 = Solution()
     for prices, ans in test_data:
-        print("# Input = {} (ans={})".format(prices, ans))
-        print("  Output = {}".format(sol.maxProfit(prices)))
+        print(f"# Input = {prices} (ans={ans})")
+        print(f"  Output = {ob1.maxProfit(prices)}")
 
 
 if __name__ == "__main__":

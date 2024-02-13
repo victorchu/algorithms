@@ -31,23 +31,36 @@ from typing import List
 
 class Solution:
 
-    def search_v1(self, nums: List[int], target: int):
-        """Recursion."""
-        def helper(nums, target, L, R):
-            if R < L :
-                return -1
-            else:
-                mid = (L + R) // 2
-                if target == nums[mid]:
-                    return mid
-                elif target > nums[mid]:
-                    return helper(nums, target, mid+1, R)
-                else:
-                    return helper(nums, target, L, mid-1)
-        return helper(nums, target, 0, len(nums)-1)
+    def helper(nums, target, l, r):
+        """Search the target in [l, r], where r >= l."""
+        # Termination condition
+        if l > r:
+            return -1
+        # Check the middle point.
+        m = (l + r) // 2
+        z = nums[m]
+        if z == target:
+            return m
+        elif z < target:
+            # search the right-hand side.
+            return helper(nums, target, m + 1, r)
+        else:
+            # search the left-hand side.
+            return helper(nums, target, l, m - 1)
+
+    # Optionally, check some boundary conditions.
+    if not nums or (target < nums[0]) or (target > nums[-1]):
+        return -1
+
+    # Search the full array.
+    return helper(nums, target, 0, len(nums)-1)
 
     def search_v2(self, nums: List[int], target: int):
-        """Loop."""
+        """Loop.  All of the concepts are the same."""  
+        # Optionally check the boundary conditions
+        if not nums or (target < nums[0]) or (target > nums[-1]):
+            return -1
+        
         L, R = 0, len(nums)-1
         while L <= R:
             mid = (L + R) // 2
@@ -66,13 +79,17 @@ def main():
         [a, 9],
         [a, 2],
         [a, -1],
+        [[1, 2], 1],
+        [[1, 2], 2],
+        [[1], 1],
+        [[1], 2],        
     ]
 
-    sol = Solution()
+    ob1 = Solution()
     for arr, target in test_data:
         print(f"# Input: {arr}, target = {target}")
-        print("  - Output v1 = {}".format(sol.search_v1(arr, target)))
-        print("  - Output v2 = {}".format(sol.search_v2(arr, target)))
+        print("  - Output v1 = {}".format(ob1.search_v1(arr, target)))
+        print("  - Output v2 = {}".format(ob1.search_v2(arr, target)))
 
 
 if __name__ == '__main__':

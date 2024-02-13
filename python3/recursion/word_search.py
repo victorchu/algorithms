@@ -29,52 +29,39 @@ from typing import List
 
 
 class Solution:
-    def exist(self, board: List[List[str]], word: str) -> bool:
-        if not word:
-            return True
+    def search(self, board: List[List[str]], word: str) -> bool:
 
-        n_rows = len(board)
-        n_cols = len(board[0])
-        visited = [[False] * n_cols for _ in range(n_rows)]
-        deltas = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-
-        # Locate start positions
-        def get_start_positions(c):
-            start_positions = []
-            for i in range(n_rows):
-                for j in range(n_cols):
-                    if board[i][j] == c:
-                        start_positions.append([i, j])
-            return start_positions
-
-        # Helper function
-        def helper(word, i, j, k, visited) -> bool:
+        def dfs(board, word, i, j, k, visited, n_rows, n_cols) -> bool:
             if k >= len(word):
                 return True
+            if board[i][j] != word[k]:
+                return False
 
-            # Search for the next letter
             visited[i][j] = True
-            c = word[k]
-            for di, dj in deltas:
-                i1 = i + di
-                j1 = j + dj
-                if i1 >= 0 and i1 < n_rows and j1 >= 0 and j1 < n_cols \
-                        and not visited[i1][j1] and board[i1][j1] == c:
-                    if helper(word, i1, j1, k+1, visited):
+            for next_i in [i-1, i+1]:
+                if (next_i < 0) or (next_i >= n_rows):
+                    continue
+                for next_j in [j-1, j+1]:
+                    if (next_j < 0) or (next_j >= n_cols):
+                        continue            
+                    if visited[next_i][next_j] == True:
+                        continue
+                    if dfs(board, word, next_i, next_j, k+1, visited, n_rows, n_cols):
                         return True
-
-            # On failed attempt, need to reset the visited status.
-            visited[i][j] = False
+            visited[i][j] = False  # Restore the visited state.
             return False
-
-        # Start to search
-        start_positions = get_start_positions(word[0])
-        for i, j in start_positions:
-            if helper(word, i, j, 1, visited):
-                return True
+        
+        # Find a starting position
+        n_rows = len(board)
+        n_cols = len(board[0])
+        visited = [ [False] * len(r) for r in board ]
+        for i, row in enumerate(board):
+            for j in range(len(row)):
+                if dfs(board, word, i, j, 0, visited, n_rows, n_cols):
+                    return True
         return False
-
-
+    
+    
 def main():
     board1 = [
         ['A', 'B', 'C', 'E'],

@@ -23,39 +23,34 @@ REFERENCE:
 
 from typing import List
 
+letter_map = {
+    '0': '',
+    '1': '',
+    '2': 'BCD',
+    '3': 'DEF',
+    '4': 'GHI',
+    '5': 'JKL',
+    '6': 'MNO',
+    '7': 'PQRS',
+    '8': 'TUV',
+    '9': 'WXYZ',
+    '*': '',
+    '#': '',
+}
+
 
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
+        def helper(digits: str, i:int, prefix: str, results: List):
+            if i >= len(digits):
+                results.append(prefix)
+                return
+            for c in letter_map[digits[i]]:
+                helper(digits, i+1, prefix + c, results)                            
 
-        number_pad = {
-            '1': [],
-            '2': ['a', 'b', 'c'],
-            '3': ['d', 'e', 'f'],
-            '4': ['g', 'h', 'i'],
-            '5': ['j', 'k', 'l'],
-            '6': ['m', 'n', 'o'],
-            '7': ['p', 'q', 'r', 's'],
-            '8': ['t', 'u', 'v'],
-            '9': ['w', 'x', 'y', 'z'],
-            '0': [],
-        }
-
-        def expand(pre, digits, i, n) -> List[str]:
-            if i >= n:
-                return [pre]
-
-            combinations = list()
-            digit = digits[i]
-            letters = number_pad[digit]
-            i += 1
-            for c in letters:
-                combinations.extend(expand(pre + c, digits, i, n))
-            return combinations
-
-        if digits is None or digits == '':
-            return []
-
-        return expand('', digits, 0, len(digits))
+        results = []
+        helper(digits, 0, "", results)
+        return results
 
 
 def main():
@@ -65,10 +60,10 @@ def main():
         '',
     ]
 
-    sol = Solution()
+    ob1 = Solution()
     for digits in test_data:
-        print("# Input = {}".format(digits))
-        print("  Output v1 = {}".format(sol.letterCombinations(digits)))
+        print(f"# Input = '{digits}'")
+        print(f"  Output v1 = {ob1.letterCombinations(digits)}")
 
 
 if __name__ == "__main__":

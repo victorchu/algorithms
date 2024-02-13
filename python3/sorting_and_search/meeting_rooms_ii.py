@@ -54,30 +54,37 @@ import heapq
 
 class Solution:
     def minMeetingRooms_v1(self, intervals: List[List[int]]) -> int:
-        """Sort + min heap."""
+        """Use a min heap to track the end times.
+        Compute: O (N log M), where M = max number of rooms.
+        Storage: O(M).
+        """
         heap = []
+        max_rooms = 0   # Must track this explicitly.  Cannot rely on the heap size.
         for start, end in sorted(intervals):
             if not heap:
                 heapq.heappush(heap, end)
+                max_rooms = max(max_rooms, len(heap))
             else:
-                if start >= heap[0]:
+                while heap and (start >= heap[0]):
                     heapq.heappop(heap)
                 heapq.heappush(heap, end)
-        return len(heap)
+                max_rooms = max(max_rooms, len(heap))
+        return max_rooms
 
 
 def main():
     test_data = [
         [[[0, 30], [5, 10], [15, 20]], 2],
         [[[7, 10], [2, 4]], 1],
-        [[[6, 15], [13, 20], [6, 17]], 3],
-        [[[13, 15], [1, 13]], 1],
+        [[[6, 15], [13, 20], [6, 17], [21,22]], 3],
+        [[[13, 15], [1, 13], [15, 17]], 1],
+        [[], 0],
     ]
 
-    sol = Solution()
+    ob1 = Solution()
     for intervals, ans in test_data:
-        print("# Input  : {} (ans = {})".format(intervals, ans))
-        print("  Output v1: {}".format(sol.minMeetingRooms_v1(intervals)))
+        print(f"# Input  : {intervals} (ans = {ans})")
+        print(f"  Output v1: {ob1.minMeetingRooms_v1(intervals)}")    
 
 
 if __name__ == "__main__":

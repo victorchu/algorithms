@@ -23,7 +23,6 @@ from typing import List
 class Solution:
     def merge_v1(self, intervals: List[List[int]]) -> List[List[int]]:
         """Sort.
-        A simple method will take O(N^2), comparing each element with the other.
         If we sort the intervals first, it will be O(N log(N)) + O(N).
         Here we use the built-in sort method.  Alternatively, we may write
         our own sort method (like merge sort) and make some modifications.

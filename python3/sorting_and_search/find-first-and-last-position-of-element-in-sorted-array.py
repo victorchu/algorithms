@@ -49,7 +49,6 @@ class Solution:
 
         return ans
 
-
     def searchRange_v2(self, nums: List[int], target: int) -> List[int]:
         """Improved recursion and binary search.
 
@@ -58,44 +57,38 @@ class Solution:
 
         Complexity = O(log n).  Memory complext = O(1)
         """
-        def helper(nums, i0, i1, target, ans):
-            # Termination condition
-            if i0 == i1:
-                if nums[i0] == target:
-                    if ans[0] == -1:
-                        ans[0] = i0
-                        ans[1] = i1
-                    else:
-                        if i0 < ans[0]:
-                            ans[0] = i0
-                        if i1 > ans[1]:
-                            ans[1] = i1
-            else:
-                m = (i0 + i1) // 2
-                if nums[m] >= target:
-                    helper(nums, i0, m, target, ans)
-                if nums[m+1] <= target:
-                    helper(nums, m+1, i1, target, ans)
-
-        # Validate the inputs
+        def helper(nums, target, L, R, ans):
+            if L > R:
+                return            
+            m = (L + R) // 2
+            x = nums[m]
+            if x == target:
+                if (m < ans[0]) or (ans[0] < 0):
+                    ans[0] = m
+                if m > ans[1]:
+                    ans[1] = m
+            if x >= target:
+                helper(nums, target, L, m-1, ans)
+            if x <= target:
+                helper(nums, target, m+1, R, ans)
+                
         ans = [-1, -1]
-        if nums:
-            helper(nums, 0, len(nums)-1, target, ans)
+        helper(nums, target, 0, len(nums)-1, ans)
         return ans
 
 def main():
     test_data = [
-        [[5,7,7,8,8,10], 8],   # [3, 4]
-        [[5,7,7,8,8,10], 6],   # [-1, -1]
-        [[5,7,7,8,8,10], 10],  # [5, 5]
-        [[], 0], # [-1, -1]
+        [[5,7,7,8,8,10],  8, [3,4]],
+        [[5,7,7,8,8,10],  6, [-1,-1]],
+        [[5,7,7,8,8,10], 10, [5,5]],
+        [[], 0, [-1,-1]],
     ]
 
-    sol = Solution()
-    for nums, target in test_data:
-        print("# Input: nums={}, target={}".format(nums, target))
-        print("  - Output v1: {}".format(sol.searchRange_v1(nums, target)))
-        print("  - Output v2: {}".format(sol.searchRange_v2(nums, target)))
+    ob1 = Solution()
+    for nums, target, ans in test_data:
+        print(f"# Input: nums={nums}, target={target}, ans={ans}")
+        print(f"  - Output v1: {ob1.searchRange_v1(nums, target)}")
+        print(f"  - Output v2: {ob1.searchRange_v2(nums, target)}")
 
 
 if __name__ == "__main__":

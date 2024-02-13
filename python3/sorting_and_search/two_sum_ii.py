@@ -52,13 +52,13 @@ class Solution:
 
         Time complexity: O(N).  Storage O(N).
         """
-        index_dict = dict()   # {num: index}
-        for i, x in enumerate(numbers):
+        seen = dict()   # {num: index}
+        for i, x in enumerate(numbers, start=1):
             y = target - x
-            if y in index_dict:
-                i0 = index_dict[y]
-                return [i0 + 1, i + 1]
-            index_dict[x] = i
+            if y in seen:
+                j = seen[y]
+                return [j, i]
+            seen[x] = i
         return []
 
 
