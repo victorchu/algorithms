@@ -5,13 +5,8 @@ Analyze and describe its complexity.
 
 Example:
 
-  Input:
-  [
-    1->4->5,
-    1->3->4,
-    2->6
-  ]
-  Output: 1->1->2->3->4->4->5->6
+  Input: [(1,4,5), (1,3,4), (2,6)]
+  Output: [1,1,2,3,4,4,5,6]
 
 Ref:
   - https://leetcode.com/problems/merge-k-sorted-lists/ (Hard)
@@ -62,28 +57,65 @@ class Solution:
         return queue[0]
 
     def mergeKLists_v2(self, lists: List[ListNode]) -> ListNode:
-        """Use a heap to process all of the lists."""
+        """Use a heap to store lists (not nodes).
+        One possible benefit is that the heap remains small, thus could be
+        more efficient.
+        """
         class NodeObj:
             """A wrapper that has comparison functions defined."""
-            def __init__(self, node): self.p = node
-            def __eq__(self, other): return self.p.val == other.p.val
-            def __lt__(self, other): return self.p.val < other.p.val
+            def __init__(self, node): 
+                self.head = node
+                
+            def __eq__(self, other):
+                return self.head.val == other.head.val
+            
+            def __lt__(self, other):
+                return self.head.val < other.head.val
 
         if not lists: return None
 
         heap = [NodeObj(node) for node in lists if node]
         heapq.heapify(heap)
-        r = prehead = ListNode()
+        head = p = None
         while heap:
             obj = heapq.heappop(heap)
-            r.next = obj.p
-            r = r.next
-            obj.p = obj.p.next
-            if obj.p:
+            # Build the new list
+            if not head:
+                head = obj.head
+                p = head
+            else:
+                p.next = obj.head
+                p = p.next
+            
+            # Modify the existing list and push back to the heap
+            obj.head = obj.head.next
+            if obj.head:
                 heapq.heappush(heap, obj)
-        return prehead.next
-
+        return head
+    
     def mergeKLists_v3(self, lists: List[ListNode]) -> ListNode:
+        # Store all nodes into a min heap
+        h = []
+        i = 0
+        for p in lists:
+            while p:
+                heapq.heappush(h, (p.val, i, p))
+                p = p.next
+                i += 1
+
+        # Popup one by one
+        head, p = None, None
+        while h:
+            v = heapq.heappop(h)
+            if not head:
+                head = v[-1]
+                p = head
+            else:
+                p.next = v[-1]
+                p = p.next
+        return head
+    
+    def mergeKLists_v4(self, lists: List[ListNode]) -> ListNode:
         """Same as v2, replacing heapq with PriorityQueue."""
         if not lists: return None
 
@@ -113,19 +145,17 @@ def main():
     """Main function"""
 
     test_data = [
-        [(1,4,5), (1,3,4), (2,6)]
+        [(1,4,5), (1,3,4), (2,6)],
+        [(1,3),(4,5,6),(8,)],
     ]
 
     sol = Solution()
     for vals in test_data:
-        print("# Inputs: {}".format(vals))
-
-        lists = make_linked_lists(vals)
-        print("  Output v1 = {}".format(lnode2str(sol.mergeKLists_v1(lists))))
-        lists = make_linked_lists(vals)
-        print("  Output v2 = {}".format(lnode2str(sol.mergeKLists_v2(lists))))
-        lists = make_linked_lists(vals)
-        print("  Output v3 = {}".format(lnode2str(sol.mergeKLists_v3(lists))))
+        print("\n# Inputs: {}".format(vals))
+        print("  Output v1 = {}".format(lnode2str(sol.mergeKLists_v1(make_linked_lists(vals)))))
+        print("  Output v2 = {}".format(lnode2str(sol.mergeKLists_v2(make_linked_lists(vals)))))
+        print("  Output v3 = {}".format(lnode2str(sol.mergeKLists_v3(make_linked_lists(vals)))))
+        print("  Output v3 = {}".format(lnode2str(sol.mergeKLists_v4(make_linked_lists(vals)))))
 
 
 if __name__ == "__main__":

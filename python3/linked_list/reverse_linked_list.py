@@ -22,7 +22,7 @@ from linked_list_utils import *
 
 class Solution:
 
-    def reverseList_v1(self, head: ListNode) -> ListNode:
+    def reverseList_v1a(self, head: ListNode) -> ListNode:
         """Use stack."""
         if not head:
             return
@@ -43,6 +43,32 @@ class Solution:
         p.next = None
 
         return prehead.next
+
+    def reverseList_v1b(self, head: ListNode) -> ListNode:
+        """Use stack."""
+        if not head:
+            return
+
+        # Put into a stack
+        stack = list()
+        p = head
+        while p:
+            stack.append(p)
+            p = p.next
+
+        # Build the new order
+        head, p = None, None
+        while stack:
+            node = stack.pop()
+            if not head:
+                head = node
+                p = head
+            else:
+                p.next = node
+                p = p.next
+        p.next = None
+
+        return head
 
     def reverseList_v2(self, head: ListNode) -> ListNode:
         """Inplace."""
@@ -78,12 +104,10 @@ def main():
     for data in test_data:
         print("\n# Input: {}".format(data))
 
-        head = make_linked_list(data)
-        print("  Output v1: {}".format(lnode2str(obj.reverseList_v1(head))))
-        head = make_linked_list(data)
-        print("  Output v2: {}".format(lnode2str(obj.reverseList_v2(head))))
-        head = make_linked_list(data)
-        print("  Output v3: {}".format(lnode2str(obj.reverseList_v2(head))))
+        print("  Output v1a: {}".format(lnode2str(obj.reverseList_v1a(make_linked_list(data)))))
+        print("  Output v1b: {}".format(lnode2str(obj.reverseList_v1b(make_linked_list(data)))))
+        print("  Output v2:  {}".format(lnode2str(obj.reverseList_v2(make_linked_list(data)))))
+        print("  Output v3:  {}".format(lnode2str(obj.reverseList_v3(make_linked_list(data)))))
 
 
 if __name__ == "__main__":
