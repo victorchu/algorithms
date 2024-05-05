@@ -78,69 +78,27 @@ class Solution:
         return lca
 
     def lowestCommonAncestor_v2(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
-        """Use one traversal of binary tree to search for both nodes.
-
-        Warning: this method assumes both p & q exist in the tree.
+        """Find the ancestor path. Each ancestor has two matches in its subtree.
         Complexity: O(n)
         """
-        def findLCA(node: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
-            if node == None:
-                return None
-            if node == p or node == q:
-                return node
-
-            # Search both branches
-            left_lca = findLCA(node.left, p, q)
-            right_lca = findLCA(node.right, p, q)
-
-            # If both return valid values, this node is the LCA
-            if left_lca and right_lca:
-                return node
-            # Otherwise, take the lca from one branch.
-            elif left_lca:
-                return left_lca
-            else:
-                return right_lca
-
-        return findLCA(root, p, q)
-
-    def lowestCommonAncestor_v3(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
-        """A variation of v2.
-
-        This algorithm also makes one traversal.  The helper function returns a tuple:
-          - number of node found.
-          - known LCA.
-
-        v2 is quicker, since it stops on finding any of the target node.
-        v3, however, is thourough.  It traverse the whole tree and make sure that
-        both target nodes are found.
-
-        Complexity: O(n)
-        """
-        def findLCA(node: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
-            if node == None:
-                return (0, None)
-
-            # Search both branches
-            ln, llca = findLCA(node.left, p, q)
-            rn, rlca = findLCA(node.right, p, q)
-            n, lca = 0, None
-
-            if llca:
-                return ln, llca
-            elif rlca:
-                return rn, rlca
-            else:
-                n = ln + rn
-                if node == p or node == q:
-                    n += 1
-                if n == 2:
-                    lca = node
-
-            return n, lca
-
-        _, lca = findLCA(root, p, q)
-        return lca
+        def dfs(node, targets, path) -> int:
+            """Returns number of matches under the node and update the ancester path.
+            """
+            if not node:
+                return 0
+            path.append(node)
+            v = 1 if node in targets else 0
+            v += dfs(node.left, targets, path)
+            if v != 2:
+                v += dfs(node.right, targets, path)
+            if v != 2:
+                path.pop()
+            return v
+        
+        path = []  # ancestor path
+        dfs(root, {p, q}, path)
+        # print(f"[DEBUG] path to LCA = {[x.val for x in path]}")
+        return path[-1] if path else None
 
 
 # ---------------------------
@@ -148,8 +106,6 @@ class Solution:
 # ---------------------------
 def main():
     """Main function"""
-
-    # Test data
     test_data = [
         [[3, 5, 1, 6, 2, 0, 8, None, None, 7, 4], 5, 1, 3],
         [[3, 5, 1, 6, 2, 0, 8, None, None, 7, 4], 6, 4, 5],
@@ -158,18 +114,17 @@ def main():
     ]
 
     sol = Solution()
+    methods = [sol.lowestCommonAncestor_v1, sol.lowestCommonAncestor_v2]
     for vals, p_val, q_val, ans in test_data:
         root = make_tree(vals)
         p = find_node(root, p_val)
         q = find_node(root, q_val)
 
         print("# Input: root = {}, p = {}, q = {} (ans = {})".format(vals, p_val, q_val, ans))
-        lca = sol.lowestCommonAncestor_v1(root, p, q)
-        print("  Output v1 = {})".format(lca.val if lca else "None"))
-        lca = sol.lowestCommonAncestor_v2(root, p, q)
-        print("  Output v2 = {})".format(lca.val if lca else "None"))
-        lca = sol.lowestCommonAncestor_v3(root, p, q)
-        print("  Output v3 = {})".format(lca.val if lca else "None"))
+        for i, f in enumerate(methods, start=1):
+            lca = f(root, p, q)
+            status = 'PASS' if lca==ans or (lca and lca.val==ans) else 'ERROR'
+            print(f"  - Output {i} = {lca.val if lca else None} --- {status}")
 
 
 if __name__ == "__main__":

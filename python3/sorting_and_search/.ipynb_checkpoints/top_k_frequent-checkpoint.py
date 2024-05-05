@@ -54,7 +54,8 @@ class Solution:
                 # heapq.heappushpop(heap, (freq, x))
                 heapq.heapreplace(heap, (freq, x))
                 
-        return [h[1] for h in heap]
+        heap.sort(reverse=True)
+        return [x[1] for x in heap]
     
     def topKFrequent_v3(self, nums: List[int], k: int) -> List[int]:
         """Use the Counter module.

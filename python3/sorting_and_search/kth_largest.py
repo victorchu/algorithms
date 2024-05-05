@@ -26,9 +26,12 @@ class Solution:
     def findKthLargest_v1(self, nums: List[int], k: int) -> int:
         """Sort first. Then pick up the desired position. O(N log M).
         """
-        # Use the built-in sort method here.
-        nums.sort()
-        return nums[-k]
+        # In-memory sort (the array is modified)
+        # nums.sort()
+        # return nums[-k]
+
+        # Sorted creates a new array
+        return sorted(nums, reverse=True)[k-1]
 
     def findKthLargest_v2(self, nums: List[int], k: int) -> int:
         """Use a min heap to track the largest k elements. O(N log k)."""
