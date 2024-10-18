@@ -12,9 +12,19 @@ below. Note that 0 and 1 do not map to any letters.
    [    / *]  [    / 0]  [    / #]
 
 EXAMPLES:
-  Input: "23"
-  Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+  Input: digits = "23"
+  Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
 
+  Input: digits = ""
+  Output: []
+
+  Input: digits = "2"
+  Output: ["a","b","c"]
+
+Constraints:
+  0 <= digits.length <= 4
+  digits[i] is a digit in the range ['2', '9'].
+  
 REFERENCE:
  - https://leetcode.com/problems/letter-combinations-of-a-phone-number/ (Medium)
  - https://www.geeksforgeeks.org/iterative-letter-combinations-of-a-phone-number/
@@ -24,39 +34,44 @@ REFERENCE:
 from typing import List
 
 letter_map = {
-    '0': '',
-    '1': '',
-    '2': 'BCD',
-    '3': 'DEF',
-    '4': 'GHI',
-    '5': 'JKL',
-    '6': 'MNO',
-    '7': 'PQRS',
-    '8': 'TUV',
-    '9': 'WXYZ',
-    '*': '',
-    '#': '',
+    '2': 'abc',
+    '3': 'def',
+    '4': 'ghi',
+    '5': 'jkl',
+    '6': 'mno',
+    '7': 'pqrs',
+    '8': 'tuv',
+    '9': 'wxyz',
 }
 
 
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        def helper(digits: str, i:int, prefix: str, results: List):
+        """Recursion"""
+
+        def helper(digits, i, comb: str, results: List[str]):
             if i >= len(digits):
-                results.append(prefix)
-                return
-            for c in letter_map[digits[i]]:
-                helper(digits, i+1, prefix + c, results)                            
+                results.append(comb)
+            else:
+                chars = letter_map.get(digits[i], '')
+                if chars:
+                    for c in chars:
+                        helper(digits, i+1, comb+c, results)
+                else:
+                    # May throw exception here
+                    # raise Exception(f"Invalid digit {digits[i]}")
+                    helper(digits, i+1, comb+'_', results)
 
         results = []
-        helper(digits, 0, "", results)
+        helper(digits, 0, '', results)
         return results
 
 
 def main():
     test_data = [
         "23",
-        "1",
+        "243",
+        "2",
         '',
     ]
 

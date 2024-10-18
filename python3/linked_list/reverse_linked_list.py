@@ -18,6 +18,7 @@ REFERENCE:
 
 from typing import List
 from linked_list_utils import *
+# from linked_list.linked_list_utils import *
 
 
 class Solution:
@@ -72,25 +73,25 @@ class Solution:
 
     def reverseList_v2(self, head: ListNode) -> ListNode:
         """Inplace."""
-        prev = None
         p = head
-        while p:
-            tmp = p.next    # pointer to the next node
-            p.next = prev   # point to the previous node
-            prev = p
-            p = tmp
-        return prev
+        while p.next:
+            tmp = p.next  # will make it a new head
+            p.next = tmp.next
+            tmp.next = head
+            head = tmp
+        return head
 
     def reverseList_v3(self, head: ListNode) -> ListNode:
         """Inplace + Recursion."""
-        def helper(node, prev):
-            if not node:
-                return prev
-            tmp = node.next
-            node.next = prev
-            return helper(tmp, node)
+        def helper(p, head):
+            if not p or not p.next:
+                return head
+            tmp = p.next
+            p.next = tmp.next
+            tmp.next = head
+            return helper(p, tmp)
 
-        return helper(head, None)
+        return helper(head, head)
 
 
 def main():
@@ -100,14 +101,13 @@ def main():
         [1, 2, 3, 4, 5],
     ]
 
-    obj = Solution()
+    ob1 = Solution()
     for data in test_data:
-        print("\n# Input: {}".format(data))
-
-        print("  Output v1a: {}".format(lnode2str(obj.reverseList_v1a(make_linked_list(data)))))
-        print("  Output v1b: {}".format(lnode2str(obj.reverseList_v1b(make_linked_list(data)))))
-        print("  Output v2:  {}".format(lnode2str(obj.reverseList_v2(make_linked_list(data)))))
-        print("  Output v3:  {}".format(lnode2str(obj.reverseList_v3(make_linked_list(data)))))
+        print(f"\n# Input: {data}")
+        print(f"  Output v1a: {lnode2list(ob1.reverseList_v1a(list2lnode(data)))}")
+        print(f"  Output v1b: {lnode2list(ob1.reverseList_v1b(list2lnode(data)))}")
+        print(f"  Output v2:  {lnode2list(ob1.reverseList_v2(list2lnode(data)))}")
+        print(f"  Output v3:  {lnode2list(ob1.reverseList_v3(list2lnode(data)))}")
 
 
 if __name__ == "__main__":

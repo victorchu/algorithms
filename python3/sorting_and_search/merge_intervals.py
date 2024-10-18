@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Given a collection of intervals, merge all overlapping intervals.
 
@@ -12,6 +11,11 @@ EXAMPLES:
   Output: [[1,5]]
   Explanation: Intervals [1,4] and [4,5] are considered overlapping.
 
+Constraints:
+    1 <= intervals.length <= 10^4
+    intervals[i].length == 2
+    0 <= starti <= endi <= 10^4
+
 REFERENCE:
   - https://leetcode.com/problems/merge-intervals/ (Medium)
 
@@ -20,55 +24,19 @@ REFERENCE:
 from typing import List
 
 
-class Solution:
+class Solution:    
     def merge_v1(self, intervals: List[List[int]]) -> List[List[int]]:
-        """Sort.
-        If we sort the intervals first, it will be O(N log(N)) + O(N).
-        Here we use the built-in sort method.  Alternatively, we may write
-        our own sort method (like merge sort) and make some modifications.
+        """Sorted and merge. A compact version.
+
+        Time Complexity: O(N log(N)) + O(N).  Space: O(N)
         """
-        ans = []
-        if not intervals:   # validate input
-            return ans
-
-        # Get the first element
-        it = iter(sorted(intervals))    # will sort on the first value!
-        curr = next(it) 
-
-        # Iterate through the rest
-        for x in it:
-            # Compare two consecutive intervals.
-            if x[0] <= curr[1]:   
-                if x[1] > curr[1]:
-                    curr[1] = x[1]
+        out = []
+        for x in sorted(intervals, key=lambda x: x[0]):
+            if out and x[0] <= out[-1][1]:
+                out[-1][1] = max(x[1], out[-1][1])
             else:
-                ans.append(curr)
-                curr = x
-        ans.append(curr)
-        return ans
-
-    def merge_v2(self, intervals: List[List[int]]) -> List[List[int]]:
-        """Simple O(N^2) method."""
-        visited = set()
-        ans = []
-        for i, x in enumerate(intervals):
-            if i in visited:
-                continue
-            visited.add(i)
-            for j in range(i+1, len(intervals)):
-                if j in visited:
-                    continue
-                y = intervals[j]
-
-                # Check if x and y overlap
-                if y[0] > x[1] or y[1] < x[0]:
-                    continue
-                else:
-                    x[0] = min(x[0], y[0])
-                    x[1] = max(x[1], y[1])
-                    visited.add(j)
-            ans.append(x)
-        return ans
+                out.append(x)
+        return out
 
 
 def main():
@@ -82,9 +50,9 @@ def main():
 
     sol = Solution()
     for intervals in test_data:
-        print("# Input  : {}".format(intervals))
-        print("  - Output v1: {}".format(sol.merge_v1(intervals)))
-        print("  - Output v2: {}".format(sol.merge_v2(intervals)))
+        print(f"# Input  : {intervals}")
+        print(f"  - Output v1: {sol.merge_v1(intervals)}")
+        # print(f"  - Output v2: {sol.merge_v2(intervals)}")
         print()
 
 

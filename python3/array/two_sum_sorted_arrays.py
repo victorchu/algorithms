@@ -26,7 +26,7 @@ from typing import List
 
 class Solution:
     def twoSum_v1(self, numbers: List[int], target: int) -> List[int]:
-        """Use two pointers.
+        """Use two pointers moving from two ends.
 
         Time complexity: O(N).  Storage O(1).
 
@@ -45,7 +45,7 @@ class Solution:
         return []
 
     def twoSum_v2(self, numbers: List[int], target: int) -> List[int]:
-        """Use a dictionary.  The array doesn't need to be sorted.
+        """Use a dictionary. The array doesn't need to be sorted.
 
         Note that the dictionary contains visited values only.
         This method can handle duplicated values.
@@ -57,7 +57,7 @@ class Solution:
             y = target - x
             if y in seen:
                 j = seen[y]
-                return [j, i]
+                return [j, i]  # put the smaller index in the front
             seen[x] = i
         return []
 

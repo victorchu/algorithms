@@ -1,16 +1,15 @@
-Recursion
-==========
+# Recursion
 
 ## Medium
 
-+ [generat_parentheses.py](generat_parentheses.py)
++ [generate_parentheses.py](generate_parentheses.py) [A,G,MS,M] *
   - Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
-+ [letter_combinations_of_a_phone_number.py](letter_combinations_of_a_phone_number.py)
++ [letter_combinations_of_a_phone_number.py](letter_combinations_of_a_phone_number.py) [M,A,G,MS]
   - Given a string containing digits from 2-9 inclusive, return all 
     possible letter combinations that the number could represent.
 
-+ [permutations.py](permutations.py)
++ [permutations.py](permutations.py) [G,MS,L,M] *
   - Given a collection of distinct integers, return all possible permutations.
 
 + [permutations_2.py](permutations_2.py)

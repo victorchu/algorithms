@@ -1,4 +1,7 @@
+*.iml
 .idea
 out
-*.iml
 __pycache__
+**/.ipynb_checkpoints
+**/SANDBOX.ipynb
+**/STATUS.md

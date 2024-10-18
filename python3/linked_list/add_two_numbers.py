@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 You are given two non-empty linked lists representing two non-negative integers.
 The digits are stored in reverse order and each of their nodes contain a single digit.
@@ -8,30 +7,31 @@ You may assume the two numbers do not contain any leading zero, except the numbe
 
 Example:
 
-  Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
-  Output: 7 -> 0 -> 8
-  Explanation: 342 + 465 = 807.
+    Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+    Output: 7 -> 0 -> 8
+    Explanation: 342 + 465 = 807.
+
+Constraints:
+
+    The number of nodes in each linked list is in the range [1, 100].
+    0 <= Node.val <= 9
+    It is guaranteed that the list represents a number that does not have leading zeros.
 
 Ref:
  - https://leetcode.com/problems/add-two-numbers/ (Medium)
  - https://www.geeksforgeeks.org/add-two-numbers-represented-by-linked-lists/
+
 """
 
 from linked_list_utils import *
 
 
 class Solution:
-
     def addTwoNumbers_v1(self, l1: ListNode, l2: ListNode) -> ListNode:
-        """Use a "prehead" to simplify the logic.
-
-        LeatCode: 64 ms, 14 MB; beats 94.54%
-        """
+        """Direct summaration, node by node."""
         p = prehead = ListNode()
         carry = 0
-
-        # Use or to reduce the number of loops
-        while l1 or l2:
+        while l1 or l2 or carry:
             s = carry
             if l1:
                 s += l1.val
@@ -39,22 +39,13 @@ class Solution:
             if l2:
                 s += l2.val
                 l2 = l2.next
-
-            carry = s // 10
             p.next = ListNode(s % 10)
             p = p.next
-
-        # Handle the final carry
-        if carry:
-            p.next = ListNode(carry)
-
-        # Return the next of the prehead
+            carry = s // 10
         return prehead.next
-
+    
     def addTwoNumbers_v2(self, l1: ListNode, l2: ListNode) -> ListNode:
         """Convert lists to integers and then conver the sume of integers back to a list.
-
-        LeetCode: 68 ms, 13.7 MB; beats 84.47%.
         """
         def to_int(l: ListNode) -> int:
             """Convert a ListNode to an integer"""
@@ -93,22 +84,48 @@ class Solution:
         return result
 
 
+    def addTwoNumbers_v3(self, l1: ListNode, l2: ListNode) -> ListNode:
+        """Convert to int, then string. This is simplier than the previous one."""
+        def to_int(p: ListNode) -> int:
+            n = 0
+            w = 1
+            while(p):
+                n = w * p.val + n
+                w *= 10
+                p = p.next
+            return n
+
+        # sum of two linked lists        
+        sum_str = str(to_int(l1) + to_int(l2))
+
+        # Convert it back to a linked list
+        head = None
+        for c in sum_str[::-1]:
+            if not head:
+                p = head = ListNode(int(c))
+            else:
+                p.next = ListNode(int(c))
+                p = p.next
+        return head
+
+
 def main():
     """Main function"""
 
     test_data = [
-        [ListNode(2, ListNode(4, ListNode(3))),
-         ListNode(5, ListNode(6, ListNode(4)))],
-        [ListNode(2, ListNode(4, ListNode(8))),
-         ListNode(5, ListNode(6, ListNode(4)))],
-        [ListNode(0), ListNode(7, ListNode(3))]
+        [[2,4,3],[5,6,4],[7,0,8]],
+        [[0],[0],[0]],
+        [[9,9,9,9,9,9,9],[9,9,9,9],[8,9,9,9,0,0,1]]
     ]
 
-    sol = Solution()
-    for l1, l2 in test_data:
-        print("# Inputs = {}, {}".format(lnode2str(l1), lnode2str(l2)))
-        print("  Output v1 = {}".format(lnode2str(sol.addTwoNumbers_v1(l1, l2))))
-        print("  Output v2 = {}".format(lnode2str(sol.addTwoNumbers_v2(l1, l2))))
+    ob1 = Solution()
+    for a1, a2, ans in test_data:
+        l1 = list2lnode(a1)
+        l2 = list2lnode(a2)
+        print(f"\n# Inputs: {a1}, {a2} ...... {ans}")
+        print(f"  Output v1 = {lnode2list(ob1.addTwoNumbers_v1(l1, l2))}")
+        print(f"  Output v2 = {lnode2list(ob1.addTwoNumbers_v2(l1, l2))}")
+        print(f"  Output v3 = {lnode2list(ob1.addTwoNumbers_v3(l1, l2))}")
 
 
 if __name__ == "__main__":

@@ -18,6 +18,11 @@ HINTS:
   - Any non-letter character shall be treated as a delimiter.
     Alternative, we can use (white spaces, ! ? , . ;) for this problem.
 
+Technologies:
+  - re.split(r'[^\w]+')
+  - max(list, key=counter.get)
+  - Counter.most_common()
+
 REFERENCE:
   - https://leetcode.com/problems/most-common-word/ (Easy)
 
@@ -62,11 +67,9 @@ class Solution:
 
     def mostCommonWord_v3(self, paragraph: str, banned: List[str]) -> str:
         """Regex and Counter."""
-        banned_set = set(banned)
-        words = [w.lower() for w in re.split(r'[^\w]+', paragraph) if w]
-        words = [w for w in words if w not in banned_set]
-        counter = Counter(words)
-        return counter.most_common(1)[0][0]
+        words = [w for w in re.split(r'[^\w]+', paragraph.lower()) if w not in banned]
+        c = Counter(words)
+        return(c.most_common(1)[0][0])
 
 
 def main():

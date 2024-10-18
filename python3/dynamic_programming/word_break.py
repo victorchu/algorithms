@@ -60,7 +60,6 @@ class Solution:
 
         Here, we try to build up from bottom up.
         """
-
         if not s:
             return True
         # Convert list to set for faster processing
@@ -82,7 +81,6 @@ class Solution:
         It tries to reach to the end of the string from each known
         working position.
         """
-
         if not s:
             return True
 
@@ -93,10 +91,8 @@ class Solution:
         n = len(s)
         wb = [True] + [False] * n
         for i in range(1, n+1):
-
             if not wb[i] and (s[0:i] in wordSet):
                 wb[i] = True
-
             if wb[i]:
                 for j in range(i+1, n+1):
                     if not wb[j] and s[i:j] in wordSet:

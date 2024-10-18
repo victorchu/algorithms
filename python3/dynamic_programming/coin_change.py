@@ -27,7 +27,11 @@ from typing import List
 
 class Solution:
     def coinChange_v1(self, coins: List[int], amount: int) -> int:
-        """Use a 2-D table to track the status -- one column for each coin.
+        """Use a 2-D table to track the status.
+        Top header = coin values {1, 2, 3}
+        Left header = amount.
+        Table value = number of ways to reach a amount;
+            1st row initialized ones; others to zeros
 
         Time complexity: O(nm) and space consumption is O(nm),
         where n is the amount and m is the number of coins.
@@ -35,8 +39,18 @@ class Solution:
         Examples:
           Input: S = {1, 2, 3}, N = 4
 
+          Initial:
               | 1  2  3
-            --+--------
+            --+---------
+            0 | 1  1  1
+            1 | 0  0  0
+            2 | 0  0  0
+            3 | 0  0  0
+            4 | 0  0  0
+
+          Final:
+              | 1  2  3
+            --+---------
             0 | 1  1  1
             1 | 1  1  1
             2 | 1  2  2
@@ -45,7 +59,9 @@ class Solution:
 
         """
 
-        # Build a table for tracking
+        # Initialize the table
+        # - First row = 1s  (amount = 0)
+        # - Others = 0s
         m = len(coins)
         table = [[0] * m for _ in range(amount+1)]
         for j in range(m):
@@ -55,8 +71,11 @@ class Solution:
         for j, c in enumerate(coins):
             for i in range(1, amount+1):
                 # There are two ways to reach this amount (i)
-                # 1. With coin c.
+                # 1. With coin c. 
+                #    Check the table value "c" rows up,
+                #    where c is the coin value.
                 x = table[i-c][j] if i >= c else 0
+                
                 # 2. Without coin c.
                 y = table[i][j-1] if j > 0 else 0
                 table[i][j] = x + y

@@ -17,24 +17,37 @@ class ListNode:
         return(self.val <= other.val)
     
 
-def lnode2str(p: ListNode) -> str:
-    """Convert a ListNode to a string."""
+def lnode2list(p: ListNode) -> list:
+    """Convert a ListNode to a list."""
     x = list()
     while (p):
-        x.append(str(p.val))
+        x.append(p.val)
         p = p.next
-    return "({})".format(", ".join(x))
+    return x
 
 
-def make_linked_list(vals):
-    p = prehead = ListNode()
+def lnode2str(p: ListNode, delim=", ") -> str:
+    """Convert a ListNode to a string."""
+    x = lnode2list(p)
+    return f"({delim.join(x)})"
+
+
+def list2lnode(vals: list):
+    p = head = None
     for v in vals:
-        p.next = ListNode(v)
-        p = p.next
-    return prehead.next
+        if not head:
+            p = head = ListNode(v)
+        else:
+            p.next = ListNode(v)
+            p = p.next
+    return head
+
+
+def make_linked_list(vals: list):
+    return list2lnode(vals)
 
 
 def make_linked_lists(lists):
-    return [make_linked_list(vals) for vals in lists]
+    return [list2lnode(vals) for vals in lists]
 
 

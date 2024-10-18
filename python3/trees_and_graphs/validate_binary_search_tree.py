@@ -8,14 +8,15 @@ The left subtree of a node contains only nodes with keys less than the node's ke
 The right subtree of a node contains only nodes with keys greater than the node's key.
 Both the left and right subtrees must also be binary search trees.
 
-EXAMPLE:
+EXAMPLES:
 
          [2]
         /   \ 
       [1]   [3]
-
+  
   Input: [2, 1, 3]
   Output: True
+  -------------------
 
          [5] 
         /   \ 
@@ -25,10 +26,11 @@ EXAMPLE:
 
   Input: [5, 1, 4, None, None, 3, 6]
   Output: False
+  -------------------
 
          [1] 
         / 
-      [1] 
+      [1]
 
   Input: [1, 1]
   Output: False; duplicated values are not allowed in this problem.

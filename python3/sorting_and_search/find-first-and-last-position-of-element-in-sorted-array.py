@@ -37,7 +37,10 @@ from typing import List
 
 class Solution:
     def searchRange_v1(self, nums: List[int], target: int) -> List[int]:
-        """Linear search. Time complexity=O(n)."""
+        """Linear search. 
+        
+        Time complexity=O(n). Space: O(1)
+        """
         ans = [-1, -1]
         for i, x in enumerate(nums):
             if (x == target):
@@ -46,47 +49,49 @@ class Solution:
                 ans[1] = i
             elif x > target:
                 break
-
         return ans
 
     def searchRange_v2(self, nums: List[int], target: int) -> List[int]:
-        """Improved recursion and binary search.
+        """Binary search.
 
-        Only use a single array to track positions.
-        Also, try to stop the binary search early.
-
-        Complexity = O(log n).  Memory complext = O(1)
+        Time Complexity = O(log n).  
+        Space Complexity = O(log n) -- call stacks.
         """
-        def helper(nums, target, L, R, ans):
+        def helper(nums: List[int], target: int, L: int, R: int, ans: List[int]):
             if L > R:
-                return            
+                return
+            
+            # Get middle value
             m = (L + R) // 2
-            x = nums[m]
-            if x == target:
-                if (m < ans[0]) or (ans[0] < 0):
-                    ans[0] = m
-                if m > ans[1]:
-                    ans[1] = m
-            if x >= target:
+            val = nums[m]
+
+            # update the answer
+            if val == target:
+                ans[0] = m if (ans[0] == -1) else min(ans[0], m)
+                ans[1] = max(ans[1], m)
+
+            # Continue to search regardless of the match status
+            if val >= target:
                 helper(nums, target, L, m-1, ans)
-            if x <= target:
+            if val <= target:
                 helper(nums, target, m+1, R, ans)
-                
+
         ans = [-1, -1]
         helper(nums, target, 0, len(nums)-1, ans)
         return ans
 
+
 def main():
     test_data = [
-        [[5,7,7,8,8,10],  8, [3,4]],
-        [[5,7,7,8,8,10],  6, [-1,-1]],
+        [[5,7,7,8,8,10], 8, [3,4]],
+        [[5,7,7,8,8,10], 6, [-1,-1]],
         [[5,7,7,8,8,10], 10, [5,5]],
         [[], 0, [-1,-1]],
     ]
 
     ob1 = Solution()
     for nums, target, ans in test_data:
-        print(f"# Input: nums={nums}, target={target}, ans={ans}")
+        print(f"\n# Input: nums={nums}, target={target}, ans={ans}")
         print(f"  - Output v1: {ob1.searchRange_v1(nums, target)}")
         print(f"  - Output v2: {ob1.searchRange_v2(nums, target)}")
 

@@ -31,55 +31,49 @@ import re
 
 
 class Solution:
-    def is_isomorphic_v1(self, s1, s2):
-        """Use two dictionaries.
+    def is_isomorphic_v1(self, s1: str, s2: str) -> bool:
+        """Use two dictionaries for tracking.
 
-        Time is O(n). Storage is O(unique characters)
+        Time Complexity: O(n), Space Complexity: O(number of unique characters)
         """
-        if len(s1) == len(s2):
-            m1 = dict()
-            m2 = dict()
-            retval = True
-
-            for c1, c2 in zip(s1, s2):
-                if (c1 in m1) and m1[c1] != c2:
-                    retval = False
-                    break
-                elif (c2 in m2) and m2[c2] != c1:
-                    retval = False
-                    break
+        if len(s1) != len(s2):
+            return False
+        d1 = dict()
+        d2 = dict()   # this can be a set
+        for c1, c2 in zip(s1, s2):
+            if c1 in d1:
+                # Check if it matches the existing mapping
+                if d1[c1] == c2:
+                    continue
                 else:
-                    m1[c1] = c2
-                    m2[c2] = c1
-        else:
-            retval = False
-        return retval
+                    return False
+            else:
+                # Found a new mapping
+                if c2 not in d2:
+                    d1[c1] = c2  # forward mapping
+                    d2[c2] = c1  # reverse mapping
+                else:
+                    return False
 
+        return True
+    
+    def is_isomorphic_v2(self, s1: str, s2: str) -> bool:
+        """Use one dictionarie. Then validate the the values are unique.
 
-    def is_isomorphic_v2(so, s1, s2):
-        """Use one dictionary.  Then, check if the values are unique.
-
-        Time is O(n). Storage is O(unique characters)
+        Time Complexity: O(n), Space Complexity: O(number of unique characters)
         """
-        if len(s1) == len(s2):
-            m = dict()
-            retval = True
-
-            # Check one-way mapping.
-            # Yet, different chars from s1 can map to the same char in s2.
-            for c1, c2 in zip(s1, s2):
-                if (c1 in m) and m[c1] != c2:
-                    retval = False
-                    break
-                else:
-                    m[c1] = c2
-
-            # Check the number of unique values
-            if len(m) != len(set(m.values())):
-                retval = False
-        else:
-            retval = False
-        return retval
+        if len(s1) != len(s2):
+            return False
+        d = dict()
+        for c1, c2 in zip(s1, s2):
+            if c1 in d:
+                if d[c1] != c2:
+                    return False
+            else:
+                d[c1] = c2
+        if len(d) != len(set(d.values())):
+            return False
+        return True
 
 
 def main():
@@ -89,11 +83,11 @@ def main():
         ['foo', 'bar']
     ]
 
-    sol = Solution()
+    ob1 = Solution()
     for s1, s2 in test_data:
-        print("# Are '{}' and '{}' isomorphic?".format(s1, s2))
-        print("(1) {}".format(sol.is_isomorphic_v1(s1, s2)))
-        print("(2) {}".format(sol.is_isomorphic_v2(s1, s2)))
+        print(f"# Input = '{s1}', '{s2}'")
+        print(f"  output v1 = {ob1.is_isomorphic_v1(s1, s2)}")
+        print(f"  output v2 = {ob1.is_isomorphic_v2(s1, s2)}")
 
 
 if __name__ == "__main__":

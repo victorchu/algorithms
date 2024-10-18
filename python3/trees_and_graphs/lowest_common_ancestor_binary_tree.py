@@ -49,7 +49,8 @@ class Solution:
         Complexity: O(n) x 2
         """
         def find_path(node: TreeNode, target: TreeNode, path: List[TreeNode]) -> bool:
-            """Find the path to the specified node."""
+            """Find the path to the specified node. 
+            Use append & pop to track the path."""
             if not node:
                 return False
 
