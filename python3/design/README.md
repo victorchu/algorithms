@@ -14,6 +14,9 @@ Design
 + [Maximum Frequency Stack](max_frequency_stack.py)
   - Implement FreqStack which will always pop the most frequent remaining element.
 
++ [simple_bank_system.py](simple_bank_system.py)
+  - Simple bank system. List and design.
+
 + [Trie](trie.py)
   - Implement a trie (pronounce 'try', aka prefix tree) with insert, search,
     and startsWith methods.

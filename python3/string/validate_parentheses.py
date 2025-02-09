@@ -31,8 +31,6 @@ REFERENCE:
 
 """
 
-from typing import List
-
 
 class Solution:
     def isValid(self, s: str) -> bool:
@@ -59,6 +57,7 @@ def main():
         '(])]',
         ')(',
         '({[]})',
+        'x(a{b[c]d}e)f',
     ]
 
     sol = Solution()

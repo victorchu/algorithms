@@ -1,0 +1,22 @@
+[project]
+name = "algorithms"
+version = "0.1.0"
+description = "Python examples"
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+readme = "README.rst"
+requires-python = ">=3.12"
+dependencies = [
+    "sortedcontainers (>=2.4.0,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
