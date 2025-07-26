@@ -5,16 +5,26 @@ Shared utililities.
 from typing import List
 
 
+#-----------
+# Class
+#-----------
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 
+    @property
+    def values(self):
+        return self.val
+
     def __str__(self):
         return str(tree_to_list(self))
 
 
+#-----------
+# Utilities
+#-----------
 def make_tree(vals: List) -> TreeNode:
     """Create a binary tree from a list of values.
 
@@ -44,20 +54,22 @@ def make_tree(vals: List) -> TreeNode:
     queue = [root]
     n = len(vals)
     k = 1   # index to the next value in the array
-    while queue:
+    while queue and k < n:
+        # Get the next node
         node = queue.pop(0)
-        if k < n:
-            if vals[k] is not None:
-                node.left = TreeNode(vals[k])
-                queue.append(node.left)
-            k += 1
-        if k < n:
-            if vals[k] is not None:
-                node.right = TreeNode(vals[k])
-                queue.append(node.right)
-            k += 1
-        else:
-            break
+
+        # Process left child
+        if k < n and vals[k] is not None:
+            node.left = TreeNode(vals[k])
+            queue.append(node.left)
+        k += 1
+
+        # Process right child
+        if k < n and vals[k] is not None:
+            node.right = TreeNode(vals[k])
+            queue.append(node.right)
+        k += 1
+
     return root
 
 
@@ -114,3 +126,9 @@ def find_node(root: TreeNode, val) -> TreeNode:
         if node.right:
             queue.append(node.right)
     return result
+
+
+def get_node_list_values(nodes: List[TreeNode]):
+    """Returns the values of a list of nodes."""
+    return [node.val if node else None for node in nodes]
+
