@@ -1,7 +1,9 @@
 *.iml
 .idea
+.DS_Store
 out
 __pycache__
 **/.ipynb_checkpoints
 **/SANDBOX.ipynb
+**/SBX*.ipynb
 **/STATUS.md
