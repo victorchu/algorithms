@@ -16,8 +16,10 @@ Setup
 Create a virtual environment:
 ::
 
-    pyenv virtualenv <version> algorithms
-    pyenv local algorithms
+    PROJ=Python-Algorithms
+    pyenv versions
+    pyenv virtualenv <version> $PROJ
+    pyenv local $PROJ
 
 Install other dependent modules, e.g. with poetry
 ::
@@ -27,5 +29,5 @@ Install other dependent modules, e.g. with poetry
 Add a IPython kernel for Jupyter.
 ::
 
-    python -m ipykernel install --u --name Algorithms
+    python -m ipykernel install --u --name $PROJ
 
