@@ -4,7 +4,7 @@
 out
 __pycache__
 **/.ipynb_checkpoints
-**/SANDBOX.ipynb
+**/SANDBOX*.ipynb
 **/SBX*.ipynb
-**/STATUS.md
+**/STATUS*.md
 **/@eaDir
