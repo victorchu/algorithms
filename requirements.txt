@@ -4,5 +4,5 @@
 sortedcontainers (>=2.4.0,<3.0.0)
 
 # Development
-ipykernel
+ipykernel >= 6.30.1
 
