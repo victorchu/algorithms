@@ -43,32 +43,25 @@ class Solution:
         return max_len
 
     def method_v2(self, s: str) -> int:
-        """Linear time.
-        Here we track the current substring. 
-        Then deal with the next character, on whether
-        it is new or repeated.  Adjust the current substring accordingly.
+        """A dynamic sliding window.
+
+        Time Complexity: O(N). Space Complexity: O(N)
         """
-        curr_len, max_len = 0, 0
-        i = 0               # point to begin of the substring.
-        visited = set()     # use a set to track characters in the substring
+        max_len = 0
+        left = 0            
+        char_set = set() 
 
         # Iterate through the string; use j to track the current position
-        for j, c in enumerate(s):
-            if c in visited:
-                # find the location of the repeated character
-                for k in range(i, j):
-                    x = s[k]
-                    if x == c:
-                        i = k + 1
-                        break
-                    else:
-                        visited.remove(x)
-                        curr_len -= 1
-            else:
-                visited.add(c)
-                curr_len += 1
-                if curr_len > max_len:
-                    max_len = curr_len
+        for right, c in enumerate(s):
+
+            # Increment the left to exclude the repeated character
+            while c in char_set:
+                char_set.remove(s[left])
+                left += 1
+
+            char_set.add(c)
+            max_len = max(len(char_set), max_len)
+
         return max_len
 
 
